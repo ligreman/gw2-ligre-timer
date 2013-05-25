@@ -1,0 +1,49 @@
+{"events":[
+{"id":"33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4","alias":"Fire Elemental", "pre_events":[
+	{"id":"5E4E9CD9-DD7C-49DB-8392-C99E1EF4E7DF"},
+	{"id":"2C833C11-5CD5-4D96-A4CE-A74C04C9A278"}]},
+
+{"id":"C5972F64-B894-45B4-BC31-2DEEA6B7C033","alias":"Giant Wurm", "pre_events":[
+	{"id":"613A7660-8F3A-4897-8FAC-8747C12E42F8"},
+	{"id":"61BA7299-6213-4569-948B-864100F35E16"}]},
+
+{"id":"31CEBA08-E44D-472F-81B0-7143D73797F5","alias":"Behemot", "pre_events":[
+	{"id":"CFBC4A8C-2917-478A-9063-1A8B43CC8C38"},
+	{"id":"36330140-7A61-4708-99EB-010B10420E39"}]},
+
+{"id":"E6872A86-E434-4FC1-B803-89921FF0F6D6","alias":"Centaur", "pre_events":[	
+	{"id":"DA465AE1-4D89-4972-AD66-A9BE3C5A1823"}]},
+
+{"id":"242BD241-E360-48F1-A8D9-57180E146789","alias":"Hydra Queen Taidha", "pre_events":[	
+	{"id":"B6B7EE2A-AD6E-451B-9FE5-D5B0AD125BB2"},
+	{"id":"189E7ABE-1413-4F47-858E-4612D40BF711"},
+	{"id":"0E0801AF-28CF-4FF7-8064-BB2F4A816D23"}]},
+
+{"id":"95CA969B-0CC6-4604-B166-DBCCE125864F","alias":"Draga Commissar", "pre_events":[	
+	{"id":"10F7854A-D2E7-42E4-9BCE-0C411EF91328"}]},
+
+{"id":"9AA133DC-F630-4A0E-BB5D-EE34A2B306C2","alias":"Golem Mark II", "pre_events":[	
+	{"id":"3ED4FEB4-A976-4597-94E8-8BFD9053522F"}]},
+
+{"id":"F7D9D427-5E54-4F12-977A-9809B23FBA99","alias":"Frozen Maw (Ice Shaman)", "pre_events":[
+	{"id":"6F516B2C-BD87-41A9-9197-A209538BB9DF"},
+	{"id":"D5F31E0B-E0E3-42E3-87EC-337B3037F437"},	
+	{"id":"374FC8CB-7AB7-4381-AC71-14BFB30D3019"}]},
+
+{"id":"295E8D3B-8823-4960-A627-23E07575ED96","alias":"Fire Shaman", "pre_events":[]},
+
+{"id":"B4E6588F-232C-4F68-9D58-8803D67E564D","alias":"Ogres", "pre_events":[
+	{"id":"D9F1CF48-B1CB-49F5-BFAF-4CEC5E68C9CF"},
+	{"id":"4B478454-8CD2-4B44-808C-A35918FA86AA"}]},
+
+
+{"id":"568A30CF-8512-462F-9D67-647D69BEFAED","alias":"Tequalt the Sunless", "pre_events":[]},
+
+{"id":"0464CB9E-1848-4AAA-BA31-4779A959DD71","alias":"Jormag Claw", "pre_events":[	
+	{"id":"BFD87D5B-6419-4637-AFC5-35357932AD2C"}]},
+
+{"id":"03BF176A-D59F-49CA-A311-39FC6F533F2F","alias":"The Shatterer", "pre_events":[	
+	{"id":"580A44EE-BAED-429A-B8BE-907A18E36189"}]}
+
+
+]}

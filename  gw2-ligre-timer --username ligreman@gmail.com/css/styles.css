@@ -1,0 +1,161 @@
+.center{
+	text-align: center;
+}
+.right {
+	text-align: right;
+}
+
+.middle {
+	vertical-align: middle;
+}
+.bottom {
+	vertical-align: text-bottom;
+}
+
+.date-mini {
+	font-size: 0.8em;
+}
+.brand {
+	margin-left: 10px !important;
+}
+select {
+	margin-left: 10px;
+}
+option.initial {
+	background: #EEE;
+	border-bottom: 1px solid #000;	
+}
+
+.hidden {
+	display: hidden !important;
+}
+
+#servers th {
+	width: 16.66%;
+}
+.table th, .table td {
+	vertical-align: bottom;
+}
+td.t50, th.t50 {
+	width: 50%;
+}
+td.serverA, td.serverB, td.serverC {
+	vertical-align: middle;
+	font-size: 1em;
+	font-weight: bold;
+	padding-left: 40px;
+	background-size: auto 30px;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+tr.event.success span.name {
+	color: #CCC;
+}
+table tr.event.success th {
+	background: #DFF0D8;
+}
+
+
+table tr.event td[data-status="Success"] {	
+	/*background-image: url('../img/success.png');*/
+	color: #0D406A;
+}
+table tr.event td[data-status="Warmup"] {	
+	background-image: url('../img/warmup.png');
+	color: #826200;
+}
+table tr.event td[data-status="Active"] {	
+	background-image: url('../img/active.png');
+	color: #0A5203;
+	font-size: 1.5em;	
+}
+table tr.event td[data-status="Fail"] {	
+	/*background-image: url('../img/fail.png');*/
+	color: #744646;
+}
+table tr.event td[data-status="Preparation"] {	
+	background-image: url('../img/warmup.png');
+	color: #826200;
+}
+table tr.event td[data-status="Chain"] {	
+	background-image: url('../img/chains.png');
+	color: #826200;
+}
+
+table tr.event th {
+	padding-right: 15px;
+}
+
+
+footer p {
+	font-style: italic;
+	text-align: center;
+	color: #999;
+}
+
+#refreshing {
+	color: #AAA;
+	font-style: italic;
+	font-size: 0.8em;
+	margin-left: 10px;
+}
+
+#update_timers {
+	margin-top: 2em;
+}
+
+img.update {
+	width: 20px;
+	margin-left: 10px;
+}
+
+div.messages.well {
+	overflow-y: auto;
+}
+
+div.alert {
+	margin-bottom: 10px;
+}
+
+div.opciones {
+	padding-bottom: 0;
+}
+
+.btn.handler {
+	background: #EEE;
+	border: 2px solid #E3E3E3;
+	border-bottom: 0;
+	border-radius: 0;
+	margin: 0;
+	width: 50%;
+	font-weight: bold;
+}
+.btn.handler:hover {
+	background: #DDD;
+}
+
+#timer_status {
+	font-weight: bold;	
+	color: #D00;
+	float: right;
+	position: relative;
+	right: 10px;
+	width: 50px;
+}
+#timer_status.on {
+	color: #0A0;
+}
+
+.notyImg {
+	margin-right: 5px;
+}
+
+.noty_text img {
+	float: left;
+	margin-right: 10px;
+}
+.noty_text .mini {
+	font-size: 0.8em;
+}
+
