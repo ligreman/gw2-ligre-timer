@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<script type="text/javascript">
+  <!--
+    var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || 'en').substr(0, 2).toLowerCase();
+  -->
+</script>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->    
+    <link rel="shortcut icon" href="../assets/ico/favicon.png">    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">                
+        <a class="brand" href="#">Chest Event Timers - EOL</a>        
+      </div>
+    </div>
+
+
+
+    <div id="main" class="container-fluid">
+      <div class="row-fluid">        
+        <div class="span9">
+
+          <div class="well well-small opciones">
+
+            <div id="collapse" class="row-fluid collapse in"> 
+              <div class="span4">                              
+                  <label>Server A <select id="serverA" name="serverA"><option value="none" class="initial">Select a server</option></select></label>
+                  <label>Server B <select id="serverB" name="serverB"><option value="none" class="initial">Select a server</option></select></label>
+                  <label>Server C <select id="serverC" name="serverC"><option value="none" class="initial">Select a server</option></select></label>   
+              </div>
+              <div class="span4 center">
+                <p><button id="update_timers" type="button" class="btn btn-large btn-info">Update timers</button></p>                
+              </div>
+              <div class="span2">
+                <p><strong>Timers</strong></p>
+                <p><label><input id="auto-refresh" class="bottom" type="checkbox" checked="checked" /> Auto-refresh timers</label></p>
+                <p><label><input id="notify_pre-events" class="bottom" type="checkbox" checked="checked" /> Notify pre-events too</label></p>
+                <p><label><input id="notify_sounds" class="bottom" type="checkbox" checked="checked" /> Play alert sounds</label></p>                
+              </div>
+              <div class="span2">
+                <p><strong>Visualization</strong></p>
+                <p><label><input id="real_names" class="bottom" type="checkbox" /> Use real names of events</label></p>
+                <p><label><input id="table_condensed" class="bottom" type="checkbox" /> Table condensed</label></p>
+              </div>
+            </div>          
+
+            <div class="center">
+              <button type="button" class="btn handler" data-toggle="collapse" data-target="#collapse">Settings</button> 
+              <span id="timer_status">OFF</span>
+            </div>
+          </div>
+          
+          <table class="table table-striped" id="event_table">
+            <thead>
+              <tr id="servers">
+                <td class="t50"><button id="btn_reset" class="btn btn-mini">Reset all events</button></td>
+                <th class="serverA">Server A</th>
+                <th class="serverB">Server B</th>
+                <th class="serverC">Server C</th>
+              </tr>
+            </thead>
+            <tbody>              
+            </tbody>
+          </table>
+
+        </div><!--/span-->
+
+        <div id="alerts" class="span3">
+          <div class="well well-small messages">  
+
+          </div><!--/.well -->
+        </div><!--/span-->
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Ligre Software 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+    <div id="data" class="hiddens">
+      <div class="events">
+        <!-- <span id="example">none</span> -->
+      </div>
+    </div>
+
+    <audio id="audio_boss">
+      <source src="audio/click2.mp3"></source>            
+    </audio>
+    <audio id="audio_default">
+      <source src="audio/click.mp3"></source>            
+    </audio>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/general.js"></script>
+    <script src="js/load_json.js"></script>    
+
+    <script type="text/javascript" src="js/jquery.noty.js"></script>
+    <script type="text/javascript" src="js/notytheme/bottomRight.js"></script>
+    <script type="text/javascript" src="js/notytheme/default.js"></script>
+
+    <script type="text/javascript">
+      <!--
+        $(document).ready(function() {
+          var w_alto = $('#main').innerHeight();
+          $('div.messages.well').height(w_alto+'px');// css('height', w_alto);
+
+          
+/*
+          var n = noty({
+              text: '<img class="notyImg" src="img/ele.png" />Prueba <em>sdfasdf</em>',
+              type: 'warmup',
+              dismissQueue: true,
+              layout: 'bottomRight',
+              theme: 'defaultTheme',
+              animation: {
+                open: {height: 'toggle'},
+                close: {height: 'toggle'},
+                easing: 'swing',
+                speed: 500 // opening & closing animation speed
+              },
+              timeout: 10000
+            });*/
+
+          
+        });
+      //-->
+    </script>
+    
+  </body>
+</html>
