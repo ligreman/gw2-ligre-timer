@@ -204,7 +204,7 @@ function checkData(data, idDom, serverId) {
 					if ($('#notify_pre-events').is(':checked')) {
 						//Creo el cuadrito alert
 						create_alert('Pre-events of '+my_events[parentEvent]+' are ACTIVE in server '+world_names[serverId]+' ('+event_names[value.event_id]+')', 'warning');
-						notification('<img src="img/events/ele.png" />Pre-events of '+my_events[parentEvent]+' are ACTIVE in server '+world_names[serverId]+' <span class="mini">('+event_names[value.event_id]+')</span>', 'warmup');
+						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+parentEvent+'.jpg" /><p>Pre-events of <strong>'+my_events[parentEvent]+'</strong> are active.</p></div><p class="noty_prevent">('+event_names[value.event_id]+')</p>', 'warmup');
 						//'+value.event_id+'
 					}
 				}
@@ -225,7 +225,7 @@ function checkData(data, idDom, serverId) {
 				if (value.state == 'Active') {
 					//Creo el cuadrito alert
 					create_alert(my_events[value.event_id]+' ACTIVE in server '+world_names[serverId], 'success');
-					notification('<p class="right"><em>'+world_names[serverId]+'</em></p><p><img src="img/events/ele.png" />'+my_events[value.event_id]+' ACTIVE</p>', 'boss');
+					notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+value.event_id+'.jpg" /><p><strong>'+my_events[value.event_id]+'</strong> is active!</p></div>', 'boss');
 					//'+value.event_id+'
 				}
 			}

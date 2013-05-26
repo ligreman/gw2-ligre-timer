@@ -43,7 +43,7 @@ td.serverA, td.serverB, td.serverC {
 	vertical-align: middle;
 	font-size: 1em;
 	font-weight: bold;
-	padding-left: 40px;
+	padding-left: 35px;
 	background-size: auto 30px;
 	background-repeat: no-repeat;
 	background-position: left center;
@@ -62,12 +62,12 @@ table tr.event td[data-status="Success"] {
 	color: #0D406A;
 }
 table tr.event td[data-status="Warmup"] {	
-	background-image: url('../img/warmup.png');
-	color: #826200;
+	/*background-image: url('../img/warmup.png');*/
+	color: #9A700C;
 }
 table tr.event td[data-status="Active"] {	
 	background-image: url('../img/active.png');
-	color: #0A5203;
+	color: #2D8725;
 	font-size: 1.5em;	
 }
 table tr.event td[data-status="Fail"] {	
@@ -75,12 +75,12 @@ table tr.event td[data-status="Fail"] {
 	color: #744646;
 }
 table tr.event td[data-status="Preparation"] {	
-	background-image: url('../img/warmup.png');
-	color: #826200;
+	/*background-image: url('../img/warmup.png');*/
+	color: #E1D70F;
 }
 table tr.event td[data-status="Chain"] {	
 	background-image: url('../img/chains.png');
-	color: #826200;
+	color: #D0960F;
 }
 
 table tr.event th {
@@ -152,10 +152,37 @@ div.opciones {
 }
 
 .noty_text img {
-	float: left;
-	margin-right: 10px;
+	/*float: left;
+	margin-right: 10px;*/
+	position: absolute;
+	left: 1px;
+	top: 1px;
 }
-.noty_text .mini {
-	font-size: 0.8em;
+.noty_server {
+	text-align: right;
+	font-size: 1.3em;
+	line-height: 0.8em;
+}
+.noty_data {
+	font-size: 1.7em;
+	line-height: 1em;
+	margin-left: 100px;	
+	min-height: 65px;
+}
+.noty_data img {
+	width: 100px;
+	opacity: 0.9;
+}
+.noty_data p {
+	margin-bottom: 0;
+}
+.noty_prevent {
+	font-size: 1em;
+	line-height: 1em;
+	margin-top:	10px;
+	margin-bottom: 0;
 }
 
+#noty_bottomRight_layout_container li {
+	min-height: 102px;
+}
