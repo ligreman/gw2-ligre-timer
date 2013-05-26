@@ -109,7 +109,7 @@
 						//border: '0',						
 						boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
 					});
-					this.$message.css({fontSize: '1.6em', lineHeight: '1.5em', textAlign: 'left'});
+					this.$message.css({fontSize: '13px', textAlign: 'left'});
 				break;
 				case 'bottom':
 					this.$bar.css({
@@ -145,9 +145,9 @@
 					this.$bar.css({backgroundColor: 'lightgreen', borderColor: '#50C24E', color: 'darkgreen'});
 					this.$buttons.css({borderTop: '1px solid #50C24E'});break;
 				case 'boss':
-					this.$bar.css({backgroundColor: '#6CBC64', borderColor: '#1F5008', color: '#1F5008'}); break;
+					this.$bar.css({backgroundColor: 'rgba(65, 220, 65, 0.8)', borderColor: '#35A42D', color: '#1F5008'}); break;
 				case 'warmup':
-					this.$bar.css({backgroundColor: 'rgba(255, 234, 168, 0.5)', borderColor: '#FFEAA8', color: '#826200'}); break;
+					this.$bar.css({backgroundColor: 'rgba(255, 234, 168, 0.8)', borderColor: '#D6A31B', color: '#826200'}); break;
 				default:
 					this.$bar.css({backgroundColor: '#FFF', borderColor: '#CCC', color: '#444'}); break;
 			}
