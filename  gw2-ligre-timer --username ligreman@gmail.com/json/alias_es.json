@@ -1,15 +1,15 @@
 [
-{"id":"33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4","alias":"Fire Elemental"},
-{"id":"C5972F64-B894-45B4-BC31-2DEEA6B7C033","alias":"Giant Wurm"},
-{"id":"31CEBA08-E44D-472F-81B0-7143D73797F5","alias":"Behemot"},
-{"id":"E6872A86-E434-4FC1-B803-89921FF0F6D6","alias":"Centaur"},
-{"id":"242BD241-E360-48F1-A8D9-57180E146789","alias":"Hydra Queen Taidha"},
-{"id":"95CA969B-0CC6-4604-B166-DBCCE125864F","alias":"Draga Commissar"},
+{"id":"33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4","alias":"Elemental de fuego"},
+{"id":"C5972F64-B894-45B4-BC31-2DEEA6B7C033","alias":"Sierpe gigante"},
+{"id":"31CEBA08-E44D-472F-81B0-7143D73797F5","alias":"Behemot de las sombras"},
+{"id":"E6872A86-E434-4FC1-B803-89921FF0F6D6","alias":"Rey centauro Ulgoth"},
+{"id":"242BD241-E360-48F1-A8D9-57180E146789","alias":"Taidha Covington"},
+{"id":"95CA969B-0CC6-4604-B166-DBCCE125864F","alias":"Comisario draga"},
 {"id":"9AA133DC-F630-4A0E-BB5D-EE34A2B306C2","alias":"Golem Mark II"},	
-{"id":"F7D9D427-5E54-4F12-977A-9809B23FBA99","alias":"Frozen Maw (Ice Shaman)"},	
-{"id":"295E8D3B-8823-4960-A627-23E07575ED96","alias":"Fire Shaman"},
-{"id":"B4E6588F-232C-4F68-9D58-8803D67E564D","alias":"Ogres"},
-{"id":"568A30CF-8512-462F-9D67-647D69BEFAED","alias":"Tequalt the Sunless"},
-{"id":"0464CB9E-1848-4AAA-BA31-4779A959DD71","alias":"Jormag Claw"},
-{"id":"03BF176A-D59F-49CA-A311-39FC6F533F2F","alias":"The Shatterer"}
+{"id":"F7D9D427-5E54-4F12-977A-9809B23FBA99","alias":"Chamán de hielo de Colinas"},	
+{"id":"295E8D3B-8823-4960-A627-23E07575ED96","alias":"Chamán de fuego"},
+{"id":"B4E6588F-232C-4F68-9D58-8803D67E564D","alias":"Líder Ogro"},
+{"id":"568A30CF-8512-462F-9D67-647D69BEFAED","alias":"Dragón: Tequalt el Sombrío"},
+{"id":"0464CB9E-1848-4AAA-BA31-4779A959DD71","alias":"Dragón: Garra de Jormag"},
+{"id":"03BF176A-D59F-49CA-A311-39FC6F533F2F","alias":"Dragón: el Asolador"}
 ]

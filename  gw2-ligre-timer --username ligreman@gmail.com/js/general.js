@@ -136,7 +136,7 @@ function checkServers() {
 			//$.getJSON(urlA).done( function(data) {
 			checkData(data, "serverA", serverA);			
 		}).fail(function (){
-			create_alert('Error updating server '+world_names[serverA], 'fail');
+			create_alert(text["error_updating_server"]+' '+world_names[serverA], 'fail');
 		}).always(function () {
 			$('#servers .serverA .update').remove();
 		});		
@@ -152,7 +152,7 @@ function checkServers() {
 			//$.getJSON(urlA).done( function(data) {
 			checkData(data2, "serverB", serverB);			
 		}).fail(function (){
-			create_alert('Error updating server '+world_names[serverB], 'fail');
+			create_alert(text["error_updating_server"]+' '+world_names[serverB], 'fail');
 		}).always(function () {
 			$('#servers .serverB .update').remove();
 		});		
@@ -168,7 +168,7 @@ function checkServers() {
 			//$.getJSON(urlA).done( function(data) {
 			checkData(data3, "serverC", serverC);			
 		}).fail(function (){
-			create_alert('Error updating server '+world_names[serverC], 'fail');
+			create_alert(text["error_updating_server"]+' '+world_names[serverC], 'fail');
 		}).always(function () {
 			$('#servers .serverC .update').remove();
 		});		
@@ -199,12 +199,12 @@ function checkData(data, idDom, serverId) {
 
 				//Si es estado Active
 				if (value.state == 'Active') {
-					$('#event_table #'+parentEvent+' .'+idDom).attr('data-status', 'Chain').children('.name').text('Pre-events'); //padre
+					$('#event_table #'+parentEvent+' .'+idDom).attr('data-status', 'Chain').children('.name').text(text["prevents"]); //padre
 
 					if ($('#notify_pre-events').is(':checked')) {
 						//Creo el cuadrito alert
-						create_alert('Pre-events of '+my_events[parentEvent]+' are ACTIVE in server '+world_names[serverId]+' ('+event_names[value.event_id]+')', 'warning');
-						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+parentEvent+'.jpg" /><p>Pre-events of <strong>'+my_events[parentEvent]+'</strong> are active.</p></div><p class="noty_prevent">('+event_names[value.event_id]+')</p>', 'warmup');
+						create_alert(text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active_in"]+' <u>'+world_names[serverId]+'</u>: <em>('+event_names[value.event_id]+')</em>', 'warning');
+						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+parentEvent+'.jpg" /><p>'+text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active"]+'.</p></div><p class="noty_prevent">('+event_names[value.event_id]+')</p>', 'warmup');
 						//'+value.event_id+'
 					}
 				}
@@ -218,14 +218,14 @@ function checkData(data, idDom, serverId) {
 			if (checkStateChange(value.event_id, value.state, idDom)) {
 				//Actualizo el estado en tabla y DATA
 				$('#data .events #'+value.event_id+' .'+idDom).text(value.state);
-				$('#event_table #'+value.event_id+' .'+idDom).attr('data-status', value.state).children('.name').text(value.state);
+				$('#event_table #'+value.event_id+' .'+idDom).attr('data-status', value.state).children('.name').text(text[value.state]);
 				console.log(idDom+' Actualizado estado de '+value.event_id+' a '+value.state);
 				
 				//Si el estado nuevo es Active, notifico, ya que es un evento BOSS	
 				if (value.state == 'Active') {
 					//Creo el cuadrito alert
-					create_alert(my_events[value.event_id]+' ACTIVE in server '+world_names[serverId], 'success');
-					notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+value.event_id+'.jpg" /><p><strong>'+my_events[value.event_id]+'</strong> is active!</p></div>', 'boss');
+					create_alert('<strong>'+my_events[value.event_id]+'</strong> '+text["is_active_in"]+' <u>'+world_names[serverId]+'</u>', 'success');
+					notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+value.event_id+'.jpg" /><p><strong>'+my_events[value.event_id]+'</strong> '+text["is_active"]+'</p></div>', 'boss');
 					//'+value.event_id+'
 				}
 			}

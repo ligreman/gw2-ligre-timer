@@ -9,7 +9,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>GW2 Ligre Timer - EOL</title>
+    <title>GW2 Ligre Timer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -43,7 +43,9 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->    
-    <link rel="shortcut icon" href="../assets/ico/favicon.png">    
+    <link rel="shortcut icon" href="../assets/ico/favicon.png">
+
+    <script type="text/javascript" src="js/text.js"></script>
   </head>
 
   <body>
@@ -64,28 +66,28 @@
 
             <div id="collapse" class="row-fluid collapse in"> 
               <div class="span3">                              
-                  <label>Server A <select id="serverA" name="serverA"><option value="none" class="initial">Select a server</option></select></label>
-                  <label>Server B <select id="serverB" name="serverB"><option value="none" class="initial">Select a server</option></select></label>
-                  <label>Server C <select id="serverC" name="serverC"><option value="none" class="initial">Select a server</option></select></label>   
+                  <label><span class="txt_1">Server</span> A <select id="serverA" name="serverA"><option value="none" class="initial txt_2">Select a server</option></select></label>
+                  <label><span class="txt_1">Server</span> B <select id="serverB" name="serverB"><option value="none" class="initial txt_2">Select a server</option></select></label>
+                  <label><span class="txt_1">Server</span> C <select id="serverC" name="serverC"><option value="none" class="initial txt_2">Select a server</option></select></label>   
               </div>
               <div class="span3 center">
-                <p><button id="update_timers" type="button" class="btn btn-large btn-info">Update timers</button></p>                
+                <p><button id="update_timers" type="button" class="btn btn-large btn-info txt_3">Update timers</button></p>                
               </div>
               <div class="span3">
-                <p><strong>Timers</strong></p>
-                <p><label><input id="auto-refresh" class="bottom" type="checkbox" checked="checked" /> Auto-refresh timers</label></p>
-                <p><label><input id="notify_pre-events" class="bottom" type="checkbox" checked="checked" /> Notify pre-events too</label></p>
-                <p><label><input id="notify_sounds" class="bottom" type="checkbox" checked="checked" /> Play alert sounds</label></p>                
+                <p><strong class="txt_4">Timers</strong></p>
+                <p><label><input id="auto-refresh" class="bottom" type="checkbox" checked="checked" /> <span class="txt_5">Auto-refresh timers</span></label></p>
+                <p><label><input id="notify_pre-events" class="bottom" type="checkbox" checked="checked" /> <span class="txt_6">Notify pre-events too</span></label></p>
+                <p><label><input id="notify_sounds" class="bottom" type="checkbox" checked="checked" /> <span class="txt_7">Play alert sounds</span></label></p>                
               </div>
               <div class="span3">
-                <p><strong>Visualization</strong></p>
-                <p><label><input id="real_names" class="bottom" type="checkbox" /> Use real names of events</label></p>
-                <p><label><input id="table_condensed" class="bottom" type="checkbox" /> Table condensed</label></p>
+                <p><strong class="txt_8">Visualization</strong></p>
+                <p><label><input id="real_names" class="bottom" type="checkbox" /> <span class="txt_9">Use real names of events</span></label></p>
+                <p><label><input id="table_condensed" class="bottom" type="checkbox" /> <span class="txt_10">Table condensed</span></label></p>
               </div>
             </div>          
 
             <div class="center">
-              <button type="button" class="btn handler" data-toggle="collapse" data-target="#collapse">Settings</button> 
+              <button type="button" class="btn handler txt_11" data-toggle="collapse" data-target="#collapse">Settings</button> 
               <span id="timer_status">OFF</span>
             </div>
           </div>
@@ -93,10 +95,10 @@
           <table class="table table-striped" id="event_table">
             <thead>
               <tr id="servers">
-                <td class="t50"><button id="btn_reset" class="btn btn-mini">Reset all events</button></td>
-                <th class="serverA">Server A</th>
-                <th class="serverB">Server B</th>
-                <th class="serverC">Server C</th>
+                <td class="t50"><button id="btn_reset" class="btn btn-mini txt_12">Reset all events</button></td>
+                <th class="serverA"><span class="txt_1">Server</span> A</th>
+                <th class="serverB"><span class="txt_1">Server</span> B</th>
+                <th class="serverC"><span class="txt_1">Server</span> C</th>
               </tr>
             </thead>
             <tbody>              
@@ -155,23 +157,24 @@
           var w_alto = $('#main').innerHeight();
           $('div.messages.well').height(w_alto+'px');// css('height', w_alto);
 
-          
-/*
-          var n = noty({
-              text: '<img class="notyImg" src="img/ele.png" />Prueba <em>sdfasdf</em>',
-              type: 'warmup',
-              dismissQueue: true,
-              layout: 'bottomRight',
-              theme: 'defaultTheme',
-              animation: {
-                open: {height: 'toggle'},
-                close: {height: 'toggle'},
-                easing: 'swing',
-                speed: 500 // opening & closing animation speed
-              },
-              timeout: 10000
-            });*/
-
+          //Traducir interfaz aquí
+          $('.txt_1').text(text["server"]);
+          $('.txt_2').text(text["select_server"]);
+          $('.txt_3').text(text["update_timers"]);
+          $('.txt_4').text(text["timers"]);
+          $('.txt_5').text(text["autorefresh"]);
+          $('.txt_6').text(text["notify_prevents"]);
+          $('.txt_7').text(text["play_sounds"]);
+          $('.txt_8').text(text["visualization"]);
+          $('.txt_9').text(text["real_names"]);
+          $('.txt_10').text(text["condensed"]);
+          $('.txt_11').text(text["settings"]);
+          $('.txt_12').text(text["reset_events"]);
+          $('.txt_13').text(text[""]);
+          $('.txt_14').text(text[""]);
+          $('.txt_15').text(text[""]);
+          $('.txt_16').text(text[""]);
+          $('.txt_17').text(text[""]);
           
         });
       //-->
