@@ -49,8 +49,8 @@ td.serverA, td.serverB, td.serverC {
 	background-position: left center;
 }
 
-tr.event.success span.name {
-	color: #CCC;
+tr.event.success span {
+	opacity: 0.3;
 }
 table tr.event.success th {
 	background: #DFF0D8;
@@ -102,7 +102,7 @@ footer p {
 }
 
 #update_timers {
-	margin-top: 2em;
+	margin-top: 1em;
 }
 
 img.update {

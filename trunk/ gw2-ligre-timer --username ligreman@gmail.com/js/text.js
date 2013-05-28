@@ -15,7 +15,8 @@ if (lang=='es') {
 	text["prevents"] = "Pre-eventos";	
 	text["server"] = "Servidor";
 	text["select_server"] = "Selecciona un servidor";
-	text["update_timers"] = "Actualizar contadores";
+	text["update_timers"] = "Actualizar";
+	text["update_timers2"] = "contadores";
 	text["timers"] = "Contadores";
 	text["autorefresh"] = "Auto-actualizar contadores";
 	text["notify_prevents"] = "Notificar de pre-eventos";
@@ -25,7 +26,7 @@ if (lang=='es') {
 	text["condensed"] = "Comprimir tabla";
 	text["settings"] = "Configuración";
 	text["reset_events"] = "Reiniciar todos los eventos";
-	text[""] = "";
+	text["location"] = "Localización";
 } else {
 	text["prevents_of"] = "Pre-events of";
 	text["error_updating_server"] = "Error updating server";
@@ -41,7 +42,8 @@ if (lang=='es') {
 	text["prevents"] = "Pre-events";	
 	text["server"] = "Server";
 	text["select_server"] = "Select a server";
-	text["update_timers"] = "Update timers";
+	text["update_timers"] = "Update";
+	text["update_timers2"] = "timers";
 	text["timers"] = "Timers";
 	text["autorefresh"] = "Auto-refresh timers";
 	text["notify_prevents"] = "Notify pre-events too";
@@ -51,6 +53,6 @@ if (lang=='es') {
 	text["condensed"] = "Condensate table";	
 	text["settings"] = "Settings";
 	text["reset_events"] = "Reset all events";
-	text[""] = "";
+	text["location"] = "Location";
 	text[""] = "";
 }
