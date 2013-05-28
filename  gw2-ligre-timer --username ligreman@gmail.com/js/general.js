@@ -5,7 +5,7 @@ firstServerLoad["serverA"] = true;
 firstServerLoad["serverB"] = true;
 firstServerLoad["serverC"] = true;
 
-create_alert('asdgds', 'info');		
+create_alert(text['disclaimer'], 'info');		
 //Contador de tiempo de eventos. ¿cómo hacerlo?
 
 
@@ -528,8 +528,25 @@ function create_alert(txt, type) {
 	if (type=="info" || type==undefined) type = "alert-info";
 	if (type=="warning") type = "";
 
-	var current = new Date();
-	var date = "[" + current.getHours() + ":" + current.getMinutes() + "]";
+	var current = new Date(),
+	date = '[';
+
+	var h = ""+current.getHours(),
+	m = current.getMinutes();
+
+	if (h.length == 1)
+		date = date + '0' + h;
+	else
+		date = date + h;
+
+	date = date + ':';
+
+	if (m.length == 1)
+		date = date + '0' + m;
+	else
+		date = date + m;
+
+	date = date + ']';
 
 	$('#alerts div.messages').prepend('<div class="alert '+type+' fade in"><button type="button" class="close" data-dismiss="alert">&times;</button><span class="date-mini">' + date + "</span> " + txt + '</div>');	
 }
