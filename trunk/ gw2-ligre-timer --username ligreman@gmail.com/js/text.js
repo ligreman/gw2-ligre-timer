@@ -27,6 +27,7 @@ if (lang=='es') {
 	text["settings"] = "Configuración";
 	text["reset_events"] = "Reiniciar todos los eventos";
 	text["location"] = "Localización";
+	text['disclaimer'] = "Versión 0.8 BETA. Sólo comprobado su funcionamiento en Chrome y Firefox.";
 } else {
 	text["prevents_of"] = "Pre-events of";
 	text["error_updating_server"] = "Error updating server";
@@ -54,5 +55,6 @@ if (lang=='es') {
 	text["settings"] = "Settings";
 	text["reset_events"] = "Reset all events";
 	text["location"] = "Location";
+	text['disclaimer'] = "Version 0.8 BETA. Only tested on Chrome and Firefox.";
 	text[""] = "";
 }
