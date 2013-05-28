@@ -1,9 +1,13 @@
-var autoRefreshTimer='',
+var autoRefreshTimer='', eventsCompleted = new Array(), firstServerLoad = new Array(), preEventsReload = new Array(),
 audio_default = $("#audio_default")[0], audio_boss = $("#audio_boss")[0];
-//audio.play();            
 
+firstServerLoad["serverA"] = true;
+firstServerLoad["serverB"] = true;
+firstServerLoad["serverC"] = true;
 
-//create_alert("lorem ipsum in orem at satum coment as taton");
+create_alert('asdgds', 'info');		
+//Contador de tiempo de eventos. ¿cómo hacerlo?
+
 
 function setCookie(c_name,value,exdays) {
 	var exdate=new Date();
@@ -39,7 +43,8 @@ function checkCookie() {
 	prefNotifyPreEvents = getCookie('eolTimer_notifyPreEvents'),
 	prefNotifySound = getCookie('eolTimer_notifySounds'),
 	prefRealNames = getCookie('eolTimer_realNames'),
-	prefTableCondensed = getCookie('eolTimer_tableMini');
+	prefTableCondensed = getCookie('eolTimer_tableMini'),
+	prefEventsCompleted = getCookie('eolTimer_eventsCompleted');
 	
 	if (servers==undefined || servers==null || servers=="") {
 		setCookie('eolTimer_servers', 'none,none,none', 365);		
@@ -77,11 +82,16 @@ function checkCookie() {
 		setCookie('eolTimer_tableMini', 'none', 365);
 		prefTableCondensed = 'none';
 	}
+	if (prefEventsCompleted==undefined || prefEventsCompleted==null || prefEventsCompleted=="") {
+		setCookie('eolTimer_eventsCompleted', 'none', 365);
+		prefEventsCompleted = 'none';
+	}
 
 	//Checks estado inicial según cookies
 	if (prefAutoRefresh == 'checked') {		
-		$('#auto-refresh').attr('checked', 'checked');		
-		autoRefreshTimer = setInterval( checkServers, 30000 ); //30 segundos
+		$('#auto-refresh').attr('checked', 'checked');	
+		clearInterval(autoRefreshTimer);	
+		autoRefreshTimer = setInterval( checkServers, 25000 ); //25 segundos
 		$('#timer_status').text('ON').addClass('on');
 	} else {
 		$('#auto-refresh').removeAttr('checked');		
@@ -98,10 +108,12 @@ function checkCookie() {
 	else
 		$('#notify_sounds').removeAttr('checked');	
 
-	if (prefRealNames == 'checked')
+	if (prefRealNames == 'checked') 
 		$('#real_names').attr('checked', 'checked');		
-	else
+	else {
 		$('#real_names').removeAttr('checked');	
+		changeRealNameEvents();
+	}
 
 	if (prefTableCondensed == 'checked') {
 		$('#table_condensed').attr('checked', 'checked');		
@@ -109,6 +121,21 @@ function checkCookie() {
 	} else {
 		$('#table_condensed').removeAttr('checked');
 		$('#event_table').removeClass('table-condensed');	
+	}
+
+	//Estado inicial de Tabla de eventos según la cookie
+	if (prefEventsCompleted != 'none') {
+		var aux = prefEventsCompleted.split(';');
+		for (x in aux) {
+			var ev_data = aux[x].split(',');
+
+			//ID ev_data[0]; STATUS (1/0) ev_data[1]
+			if (ev_data[1] == '1') {		
+				$('#'+ev_data[0]).addClass('success').find('input.check_event').attr('checked', 'checked');
+				eventsCompleted.push(ev_data[0]); //array de completados
+			}
+		}
+		console.log(eventsCompleted);
 	}
 }
 
@@ -136,7 +163,7 @@ function checkServers() {
 			//$.getJSON(urlA).done( function(data) {
 			checkData(data, "serverA", serverA);			
 		}).fail(function (){
-			create_alert(text["error_updating_server"]+' '+world_names[serverA], 'fail');
+			create_alert(text["error_updating_server"]+' '+world_names[serverA], 'error');
 		}).always(function () {
 			$('#servers .serverA .update').remove();
 		});		
@@ -152,7 +179,7 @@ function checkServers() {
 			//$.getJSON(urlA).done( function(data) {
 			checkData(data2, "serverB", serverB);			
 		}).fail(function (){
-			create_alert(text["error_updating_server"]+' '+world_names[serverB], 'fail');
+			create_alert(text["error_updating_server"]+' '+world_names[serverB], 'error');
 		}).always(function () {
 			$('#servers .serverB .update').remove();
 		});		
@@ -168,11 +195,11 @@ function checkServers() {
 			//$.getJSON(urlA).done( function(data) {
 			checkData(data3, "serverC", serverC);			
 		}).fail(function (){
-			create_alert(text["error_updating_server"]+' '+world_names[serverC], 'fail');
+			create_alert(text["error_updating_server"]+' '+world_names[serverC], 'error');
 		}).always(function () {
 			$('#servers .serverC .update').remove();
 		});		
-	}
+	}	
 }
 
 function loading(server) {
@@ -185,53 +212,89 @@ function checkData(data, idDom, serverId) {
 	//Recorro el array de data y de los eventos que yo tengo en cuenta miro el estado de cada uno de ellos, comparandolos con la estructura data
 	//if (my_events.hasOwnProperty("33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4"))
 	//Campos de data.events -> world_id, map_id, event_id, state (Warmup, Preparation, Active, Success, Fail)
-	console.log("En "+idDom+" hay "+data.events.length	+" eventos");
+	//var habiaPreEvents = false;
+	console.log("En "+idDom+" hay "+data.events.length	+" eventos");	
+
 	$.each(data.events, function(key, value) {
+		//var habiaPreEvents = false;
+
 		//Compruebo si es uno de los pre eventos primero
 		if (my_pre_events.hasOwnProperty(value.event_id)) {
 			var parentEvent = my_pre_events[value.event_id]; //El evento padre
+
+			//console.log("Lo he hecho: "+ eventsCompleted.indexOf(parentEvent));
+			//console.log(eventsCompleted);
+			//console.log(parentEvent);
 
 			//Compruebo si hay cambio de estado
 			if (checkStateChange(value.event_id, value.state, idDom)) {
 				//Si ha cambiado actualizo
 				$('#data .events #'+value.event_id+' .'+idDom).text(value.state); //datos del prevento				
-				console.log(idDom+' Actualizado estado de pre-evento '+value.event_id+' a '+value.state);
+				//console.log(idDom+' Actualizado estado de pre-evento '+value.event_id+' a '+value.state);
 
 				//Si es estado Active
 				if (value.state == 'Active') {
 					$('#event_table #'+parentEvent+' .'+idDom).attr('data-status', 'Chain').children('.name').text(text["prevents"]); //padre
-
-					if ($('#notify_pre-events').is(':checked')) {
-						//Creo el cuadrito alert
-						create_alert(text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active_in"]+' <u>'+world_names[serverId]+'</u>: <em>('+event_names[value.event_id]+')</em>', 'warning');
-						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+parentEvent+'.jpg" /><p>'+text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active"]+'.</p></div><p class="noty_prevent">('+event_names[value.event_id]+')</p>', 'warmup');
-						//'+value.event_id+'
+						//Siempre creo las alertas/log
+						create_alert(text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active_in"]+' <u>'+world_names[serverId]+'</u>: <em>('+event_names[value.event_id]+')</em>', 'warning');		
+					
+					if ($('#notify_pre-events').is(':checked')  &&  eventsCompleted.indexOf(parentEvent) == -1) {
+						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+parentEvent+'.jpg" /><p>'+text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active"]+'.</p></div><p class="noty_prevent">('+event_names[value.event_id]+')</p>', 'warmup');			
 					}
+
+					if (firstServerLoad[idDom]) {
+                        preEventsReload.push("$('#event_table #"+parentEvent+" ."+idDom+"').attr('data-status', 'Chain').children('.name').text('"+text['prevents']+"');");
+                    }
+				} 
+
+				//Si falla el preEvento también cambio el padre
+				if (value.state == 'Fail') {
+					$('#event_table #'+parentEvent+' .'+idDom).attr('data-status', 'Fail').children('.name').text(text["Fail"]); //padre
+					//No tengo que hacer el Reload aquí, porque el pre-evento falló, no me interesa más
 				}
 			}
 		}
 
 
 		//Compruebo si es uno de los eventos para terminar
-		if (my_events.hasOwnProperty(value.event_id)) {
+		if (my_events.hasOwnProperty(value.event_id)) {	
 			//Compruebo si ha cambiado de estado respecto a la anterior ejecución
 			if (checkStateChange(value.event_id, value.state, idDom)) {
 				//Actualizo el estado en tabla y DATA
 				$('#data .events #'+value.event_id+' .'+idDom).text(value.state);
-				$('#event_table #'+value.event_id+' .'+idDom).attr('data-status', value.state).children('.name').text(text[value.state]);
-				console.log(idDom+' Actualizado estado de '+value.event_id+' a '+value.state);
+
+				$('#event_table #'+value.event_id+' .'+idDom).attr('data-status', value.state).children('.name').text(text[value.state]);								
+				//console.log(idDom+' Actualizado estado de '+value.event_id+' a '+value.state);
 				
 				//Si el estado nuevo es Active, notifico, ya que es un evento BOSS	
-				if (value.state == 'Active') {
-					//Creo el cuadrito alert
+				if (value.state == 'Active') {					
 					create_alert('<strong>'+my_events[value.event_id]+'</strong> '+text["is_active_in"]+' <u>'+world_names[serverId]+'</u>', 'success');
-					notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+value.event_id+'.jpg" /><p><strong>'+my_events[value.event_id]+'</strong> '+text["is_active"]+'</p></div>', 'boss');
-					//'+value.event_id+'
+
+					if (eventsCompleted.indexOf(value.event_id) == -1) {
+						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+value.event_id+'.jpg" /><p><strong>'+my_events[value.event_id]+'</strong> '+text["is_active"]+'</p></div>', 'boss');
+					}					
 				}
 			}
-		} 	
+		}
 
+
+		//En la primera vez que cargo eventos, pongo el lugar y demás cosas del tooltip
+		if (firstServerLoad[idDom] == true) {
+			$('#event_table #'+value.event_id+' label.checkbox').attr('data-content', map_names[value.map_id]).attr('data-original-title', text['location']);			
+		}
 	});
+
+	firstServerLoad[idDom] = false;
+	//console.log(map_names);
+	
+	//Para que no me sobreescriban los eventos a los pre-eventos la primera vez que cargo todo
+	if (preEventsReload.length > 0) {
+		$.each(preEventsReload, function(key2, value2) {
+			//console.log("EJECUTANDO: "+value2);
+        	eval(value2);
+		});
+		preEventsReload = new Array();
+	}
 }
 
 
@@ -287,6 +350,8 @@ $('#notify_sounds').change(function() {
 
 	//Nombres de eventos
 $('#real_names').change(function() {
+	changeRealNameEvents();
+
 	if ($(this).is(':checked'))
 		setCookie('eolTimer_realNames', 'checked', 365);		
 	else
@@ -308,7 +373,8 @@ $('#table_condensed').change(function() {
 	//Auto-refresh
 $('#auto-refresh').on('click', function() {
 	if($(this).is(':checked')) {  
-        autoRefreshTimer = setInterval( checkServers, 30000 ); //30 segundos
+		clearInterval(autoRefreshTimer);
+        autoRefreshTimer = setInterval( checkServers, 25000 ); //25 segundos
         setCookie('eolTimer_autorefresh', 'checked', 365);
         $('#timer_status').text('ON').addClass('on');
         console.log("Auto-refresh ON");
@@ -342,7 +408,8 @@ $('#update_timers').on('click', function(e) {
 	//Si está marcada la casilla de auto-refresh
 	if ($('#auto-refresh').is(':checked')) {
 		checkServers();
-		autoRefreshTimer = setInterval( checkServers, 30000 ); //30 segundos
+		clearInterval(autoRefreshTimer);
+		autoRefreshTimer = setInterval( checkServers, 25000 ); //25 segundos
 		$('#timer_status').text('ON').addClass('on');
 		//console.log("Auto-refresh ON");
 	} else {
@@ -358,21 +425,70 @@ $('#update_timers').on('click', function(e) {
 
 
 //Genera la tabla de datos inicial con servidores
-function generateTable(data) {
+function generateTable(data, maps) {
 	console.log("Creando tabla");
 	var tabla = $('#event_table tbody');
 	for(x in data) {
 		//Para cada evento padre creo una entrada (los pre-eventos no los muestro en tabla)
-		tabla.append('<tr class="event t50" id="'+x+'"><th><label class="checkbox inline"><input class="check_event" type="checkbox" /> <strong><span class="name" title="'+my_events[x]+'">'+event_names[x]+'</span></strong></label></th><td class="serverA"><span class="name">--</span></td><td class="serverB"><span class="name">--</span></td><td class="serverC"><span class="name">--</span></td></tr>');
+		tabla.append('<tr class="event t50" id="'+x+'"><th><label class="checkbox inline event_name" data-toggle="popover" data-content="" data-original-title=""><input class="check_event" type="checkbox" /> <strong><span class="name" data-altname="'+my_events[x]+'">'+event_names[x]+'</span></strong></label></th><td class="serverA"><span class="name">--</span></td><td class="serverB"><span class="name">--</span></td><td class="serverC"><span class="name">--</span></td></tr>');
 	}
 
 	//Eventos de los checkbox
 	$('input.check_event').on('change', function() {
+		var tr = $(this).closest('tr.event');
+
 		if ($(this).is(':checked')) {
-			$(this).closest('tr.event').addClass('success');
+			tr.addClass('success');
+			eventsCompleted.push(tr.attr('id'));
 		} else {
-			$(this).closest('tr.event').removeClass('success');
+			tr.removeClass('success');
+			var ind = eventsCompleted.indexOf(tr.attr('id'));			
+			eventsCompleted.splice(ind, 1);
 		}
+
+		
+		//alert("Añado/quito "+tr.attr('id'));
+		console.log(eventsCompleted);
+
+		//Salvo cambios
+		saveCookieEventsCompleted();
+	});
+
+
+	/*
+	<a href="#" class="btn btn-large btn-danger" data-toggle="popover" title="" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">Click to toggle popover</a>
+	*/
+	// popover demo
+	$("[data-toggle=popover]")
+		.popover({placement:'top', delay:500, trigger:'hover'})
+		.click(function(e) {  });
+}
+
+
+
+function saveCookieEventsCompleted() {
+	//Cojo los estados de los checks de la tabla y los guardo en la cookie
+	var datos = "";
+
+	$('#event_table tbody tr').each(function () {
+		//alert($(this).attr('id'));
+		datos = datos + $(this).attr('id')+',';
+		if ( $(this).find('input.check_event').is(':checked') ) {
+			datos = datos + '1;';
+		} else
+			datos = datos + '0;';
+	});
+
+	setCookie('eolTimer_eventsCompleted', datos, 365);
+}
+
+function changeRealNameEvents() {
+	//Intercambio title y contenido en los eventos
+	$('#event_table label.event_name span.name').each(function() {
+		var title = $(this).attr('data-altname'),
+		content = $(this).text();
+		$(this).attr('data-altname', content);
+		$(this).text(title);
 	});
 }
 

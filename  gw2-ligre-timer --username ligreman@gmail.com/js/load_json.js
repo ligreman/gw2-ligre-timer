@@ -43,7 +43,7 @@ var world_names = new Array(),
 
 		//console.log("Iterations 2: "+i);
 
-		checkCookie();
+		//checkCookie();
 	}).fail(function (){
 		create_alert('Error loading JSON '+url, 'fail');
 	});
@@ -124,7 +124,7 @@ var world_names = new Array(),
 	  async: false
 	  //data: {id : 1000},	  
 	}).done(function(data) {
-		console.log("Events Table JSON loaded ("+data.length+" items)");	
+		console.log("Events Table JSON loaded ("+data.events.length+" items)");	
 	//console.log(data);
 		
 		var insider, event_dom = $('div#data div.events');
@@ -142,7 +142,7 @@ var world_names = new Array(),
 			events_table[value.id] = insider;		
 
 			event_dom.append('<p id="'+value.id+'"><span class="serverA">none</span> <span class="serverB">none</span> <span class="serverC">none</span></p>');
-			my_events[value.id] = aliases[value.id];
+			my_events[value.id] = aliases[value.id];			
 		});	
 
 		delete insider;
@@ -150,8 +150,11 @@ var world_names = new Array(),
 		console.log("-------------------------------");
 		console.log(my_events);
 		console.log(my_pre_events);
+		//console.log(my_maps);
 
+		//Inicio otras cosas de la página
 		generateTable(events_table);
+		checkCookie();
 
 		/*if (my_events.hasOwnProperty("33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4"))
 			console.log("La tiene");
