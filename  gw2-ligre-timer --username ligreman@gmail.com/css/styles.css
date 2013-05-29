@@ -1,3 +1,6 @@
+.negrita {
+	font-weight: bold;
+}
 .center{
 	text-align: center;
 }
@@ -10,6 +13,9 @@
 }
 .bottom {
 	vertical-align: text-bottom;
+}
+.mright {
+	margin-right: 10px;
 }
 
 .date-mini {
@@ -28,6 +34,9 @@ option.initial {
 
 .hidden {
 	display: hidden !important;
+}
+.nomargin {
+	margin: 0 !important;
 }
 
 #servers th {
@@ -55,7 +64,9 @@ tr.event.success span {
 table tr.event.success th {
 	background: #DFF0D8;
 }
-
+table td.middle {
+	vertical-align: middle;
+}
 
 table tr.event td[data-status="Success"] {	
 	/*background-image: url('../img/success.png');*/
@@ -151,9 +162,7 @@ div.opciones {
 	margin-right: 5px;
 }
 
-.noty_text img {
-	/*float: left;
-	margin-right: 10px;*/
+.noty_text img {	
 	position: absolute;
 	left: 1px;
 	top: 1px;
@@ -185,4 +194,40 @@ div.opciones {
 
 #noty_bottomRight_layout_container li {
 	min-height: 102px;
+}
+
+#event_table .popover {
+	max-width: 450px;	
+}
+#event_table .btn-mini {
+	padding: 0 3px;	
+}
+#event_table .btn-mini i {
+	margin-top: 0;
+}
+
+body {
+	padding-top: 0 !important;
+}
+
+body .navbar-fixed-top {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+p.marginBmini {
+	margin-bottom: 0;
+}
+
+#event_table .popover-title {
+	font-weight: bold;
+}
+#event_table .popover-title a {
+	margin-left: 20px;
+}
+
+#clock {
+	font-weight: bold;
+	color: #AAA;
+	float: right;
 }
