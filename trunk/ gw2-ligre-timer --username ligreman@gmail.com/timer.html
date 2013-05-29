@@ -3,6 +3,10 @@
 <script type="text/javascript">
   <!--
     var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || 'en').substr(0, 2).toLowerCase();
+
+    if (lang != 'en' && lang != 'es' && lang != 'fr' && lang != 'de') {
+      lang = 'en';
+    }
   -->
 </script>
 
@@ -52,7 +56,8 @@
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">                
-        <a class="brand" href="#">Chest Event Timers - EOL</a>        
+        <a class="brand" href="#">Chest Event Timers - EOL</a>
+        <span id="clock" class="brand"></span>
       </div>
     </div>
 
@@ -65,29 +70,32 @@
           <div class="well well-small opciones">
 
             <div id="collapse" class="row-fluid collapse in"> 
-              <div class="span4">                                 
-                  <label><span class="txt_1">Server</span> A <select id="serverA" name="serverA"><option value="none" class="initial txt_2">Select a server</option></select></label>
-                  <label><span class="txt_1">Server</span> B <select id="serverB" name="serverB"><option value="none" class="initial txt_2">Select a server</option></select></label>
-                  <label><span class="txt_1">Server</span> C <select id="serverC" name="serverC"><option value="none" class="initial txt_2">Select a server</option></select></label>   
+              <div class="span6">                                 
+                  <label><i class="icon-globe"></i> <span class="txt_1">Server</span> A <select id="serverA" name="serverA"><option value="none" class="initial txt_2">Select a server</option></select></label>
+                  <label><i class="icon-globe"></i> <span class="txt_1">Server</span> B <select id="serverB" name="serverB"><option value="none" class="initial txt_2">Select a server</option></select></label>
+                  <label><i class="icon-globe"></i> <span class="txt_1">Server</span> C <select id="serverC" name="serverC"><option value="none" class="initial txt_2">Select a server</option></select></label>   
               </div>
-              <div class="span2">
-                <p><button id="update_timers" type="button" class="btn btn-large btn-info"><span class="txt_3_1">Update</span><br /><span class="txt_3_2">timers</span></button></p>                
+              <!--<div class="span2">
+                <p><button id="update_timers" type="button" class="btn btn-large btn-primary"><span class="txt_3_1">Update</span><br /><span class="txt_3_2">timers</span></button></p>                
+              </div>-->
+              <div class="span3">
+                <p><i class="icon-time"></i> <strong class="txt_4">Timers</strong></p>
+                <p class="marginBmini"><label><input id="auto-refresh" class="bottom" type="checkbox" checked="checked" /> <span class="txt_5">Auto-refresh timers</span></label></p>
+                <p class="marginBmini"><label><input id="notify_pre-events" class="bottom" type="checkbox" checked="checked" /> <span class="txt_6">Notify pre-events too</span></label></p>
+                <p class="marginBmini"><label><input id="notify_sounds" class="bottom" type="checkbox" checked="checked" /> <span class="txt_7">Play alert sounds</span></label></p>
+                <!--<p><label><input id="notify_sounds" class="bottom" type="checkbox" /> <span class="txt_13">Use Chrome notifications</span></label></p>-->
+                             
               </div>
               <div class="span3">
-                <p><strong class="txt_4">Timers</strong></p>
-                <p><label><input id="auto-refresh" class="bottom" type="checkbox" checked="checked" /> <span class="txt_5">Auto-refresh timers</span></label></p>
-                <p><label><input id="notify_pre-events" class="bottom" type="checkbox" checked="checked" /> <span class="txt_6">Notify pre-events too</span></label></p>
-                <p><label><input id="notify_sounds" class="bottom" type="checkbox" checked="checked" /> <span class="txt_7">Play alert sounds</span></label></p>                
-              </div>
-              <div class="span3">
-                <p><strong class="txt_8">Visualization</strong></p>
+                <p><i class="icon-eye-open"></i> <strong class="txt_8">Visualization</strong></p>
                 <p><label><input id="real_names" class="bottom" type="checkbox" checked="checked" /> <span class="txt_9">Use real names of events</span></label></p>
                 <p><label><input id="table_condensed" class="bottom" type="checkbox" /> <span class="txt_10">Table condensed</span></label></p>
+                <p><button id="update_timers" type="button" class="btn btn-primary nomargin"><strong><span class="txt_3_1">Update</span> <span class="txt_3_2">timers</span></strong></button></p>
               </div>
             </div>          
 
             <div class="center">
-              <button type="button" class="btn handler txt_11" data-toggle="collapse" data-target="#collapse">Settings</button> 
+              <button type="button" class="btn handler" data-toggle="collapse" data-target="#collapse"><i class="icon-cog"></i> <span class="txt_11">Settings</span></button> 
               <span id="timer_status">OFF</span>
             </div>
           </div>
@@ -95,7 +103,8 @@
           <table class="table table-striped" id="event_table">
             <thead>
               <tr id="servers">
-                <td class="t50"><button id="btn_reset" class="btn btn-mini txt_12">Reset all events</button></td>
+                <td></td>
+                <td class="t50 negrita"><span class="txt_14 mright">Events completed</span> <button id="btn_reset" class="btn btn-mini txt_12">Reset all events</button></td>
                 <th class="serverA"><span class="txt_1">Server</span> A</th>
                 <th class="serverB"><span class="txt_1">Server</span> B</th>
                 <th class="serverC"><span class="txt_1">Server</span> C</th>
@@ -118,7 +127,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Ligre Software 2013</p>
+        <p>BETA v0.9 &copy; <a href="htt://ligresoftware.ligreman.com">Ligre Software</a> 2013</p>
       </footer>
 
     </div><!--/.fluid-container-->
@@ -171,10 +180,74 @@
           $('.txt_10').text(text["condensed"]);
           $('.txt_11').text(text["settings"]);
           $('.txt_12').text(text["reset_events"]);
+          $('.txt_13').text(text["usechrome"]);
+          $('.txt_14').text(text["done"]);
        
+          //Reloj
+          clock();
+
         });
       //-->
     </script>
     
+
+
+<script>
+  function a() {
+    setInterval(notify, 10000);
+  }
+  function notify() {
+    var havePermission = window.webkitNotifications.checkPermission();
+    if (havePermission == 0) {
+      // 0 is PERMISSION_ALLOWED
+      var notification = window.webkitNotifications.createNotification(
+        'http://crystaltales.net46.net/img/events/03BF176A-D59F-49CA-A311-39FC6F533F2F.jpg',
+        'Tequalt the sunless acaba de aparecer!',
+        '-claro de aurora-'
+      );
+
+      notification.onclick = function () {        
+        notification.close();
+      }
+      notification.ondisplay = function () {        
+        setTimeout(function(){ notification.close(); }, 5000);
+      }
+      notification.show();
+    } else {
+        window.webkitNotifications.requestPermission();
+    }
+    
+  }  
+
+  if (window.webkitNotifications) {
+    console.log("Notifications are supported!");
+  } else {
+    console.log("Notifications are not supported for this Browser/OS version yet.");
+  }
+
+
+
+
+  /***********
+    //De inicio, para pedir permiso si acaso
+      if (window.webkitNotifications) {
+        var havePermission = window.webkitNotifications.checkPermission();
+        if (havePermission != 0) {
+          window.webkitNotifications.requestPermission();
+        }
+      } else {
+        console.log("Notifications are not supported for this Browser/OS version yet.");
+      }
+
+    //A la hora de notificar, si tengo permiso y he activado las notificaciones de Chrome en preferencias
+    //Si no, muestro notificación normal
+  */
+</script>
+
+<!--<div style="width: 300px; height: 300px; background: yellow" onclick="a()">
+Cick here to notify
+</div>-->
+
+
   </body>
 </html>

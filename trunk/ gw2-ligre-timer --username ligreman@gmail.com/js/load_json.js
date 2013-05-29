@@ -8,42 +8,26 @@ var world_names = new Array(),
 
 // en, es, fr, de
 
-//function load_JSONS() {
-
 	//Worlds
 	var url = "json/world_"+lang+".json";
 	console.log("Loading JSON: "+url);
 
-	//$.getJSON(url).done(function(data) {	
 	$.ajax({
 	  url: url,
 	  dataType: 'json',
 	  async: false
-	  //data: {id : 1000},	  
 	}).done(function(data) {
-		//world_names = data;
-
 		console.log("Worlds JSON loaded ("+data.length+" items)");
-		//var i = 0;
+
 		$.each(data, function(key, value) {
 
 			$("#serverA, #serverB, #serverC").append('<option value="'+value.id+'">'+value.name+'</option>');
 			world_names[parseInt(value.id)] = value.name;
-			//i++;
 		});		
 
 		//console.log("Iterations: "+i);
 		//console.log(world_names);
-		
-		//i = 0;
-		/*for (key in world_names) {
-			console.log(world_names[key]);
-			i++;
-		}	*/
-
 		//console.log("Iterations 2: "+i);
-
-		//checkCookie();
 	}).fail(function (){
 		create_alert('Error loading JSON '+url, 'fail');
 	});
@@ -53,20 +37,16 @@ var world_names = new Array(),
 	url = "json/event_"+lang+".json";
 	console.log("Loading JSON: "+url);
 
-	//$.getJSON(url).done(function(data) {	
 	$.ajax({
 	  url: url,
 	  dataType: 'json',
 	  async: false
-	  //data: {id : 1000},	  
 	}).done(function(data) {
-		//event_names = data;
 		console.log("Events JSON loaded ("+data.length+" items)");
 
 		$.each(data, function(key, value) {
 			event_names[value.id] = value.name;
 		});		
-		//console.log(event_names);
 	}).fail(function (){
 		create_alert('Error loading JSON '+url, 'fail');
 	});
@@ -76,14 +56,11 @@ var world_names = new Array(),
 	url = "json/map_"+lang+".json";
 	console.log("Loading JSON: "+url);
 
-	//$.getJSON(url).done(function(data) {		
 	$.ajax({
 	  url: url,
 	  dataType: 'json',
 	  async: false
-	  //data: {id : 1000},	  
 	}).done(function(data) {
-		//map_names = data;
 		console.log("Maps JSON loaded ("+data.length+" items)");
 
 		$.each(data, function(key, value) {
@@ -102,12 +79,11 @@ var world_names = new Array(),
 	  url: url,
 	  dataType: 'json',
 	  async: false
-	  //data: {id : 1000},	  
 	}).done(function(data) {
 		console.log("Aliases JSON loaded ("+data.length+" items)");			
 
 		$.each(data, function(key, value) {
-			aliases[value.id] = value.alias;
+			aliases[value.id] = value.alias;			
 		});
 	}).fail(function (){
 		create_alert('Error loading JSON '+url, 'fail');
@@ -122,7 +98,6 @@ var world_names = new Array(),
 	  url: url,
 	  dataType: 'json',
 	  async: false
-	  //data: {id : 1000},	  
 	}).done(function(data) {
 		console.log("Events Table JSON loaded ("+data.events.length+" items)");	
 	//console.log(data);
@@ -155,10 +130,6 @@ var world_names = new Array(),
 		//Inicio otras cosas de la página
 		generateTable(events_table);
 		checkCookie();
-
-		/*if (my_events.hasOwnProperty("33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4"))
-			console.log("La tiene");
-		else console.log("no la tiene");*/
 	}).fail(function (){
 		create_alert('Error loading JSON '+url, 'fail');
 	});

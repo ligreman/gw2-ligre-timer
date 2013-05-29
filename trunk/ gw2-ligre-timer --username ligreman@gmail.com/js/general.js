@@ -160,7 +160,6 @@ function checkServers() {
 		  async: true,
 		  beforeSend: loading("serverA")
 		}).done(function(data) {
-			//$.getJSON(urlA).done( function(data) {
 			checkData(data, "serverA", serverA);			
 		}).fail(function (){
 			create_alert(text["error_updating_server"]+' '+world_names[serverA], 'error');
@@ -176,7 +175,6 @@ function checkServers() {
 		  async: true,
 		  beforeSend: loading("serverB")
 		}).done(function(data2) {
-			//$.getJSON(urlA).done( function(data) {
 			checkData(data2, "serverB", serverB);			
 		}).fail(function (){
 			create_alert(text["error_updating_server"]+' '+world_names[serverB], 'error');
@@ -192,7 +190,6 @@ function checkServers() {
 		  async: true,
 		  beforeSend: loading("serverC")
 		}).done(function(data3) {
-			//$.getJSON(urlA).done( function(data) {
 			checkData(data3, "serverC", serverC);			
 		}).fail(function (){
 			create_alert(text["error_updating_server"]+' '+world_names[serverC], 'error');
@@ -212,12 +209,9 @@ function checkData(data, idDom, serverId) {
 	//Recorro el array de data y de los eventos que yo tengo en cuenta miro el estado de cada uno de ellos, comparandolos con la estructura data
 	//if (my_events.hasOwnProperty("33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4"))
 	//Campos de data.events -> world_id, map_id, event_id, state (Warmup, Preparation, Active, Success, Fail)
-	//var habiaPreEvents = false;
 	console.log("En "+idDom+" hay "+data.events.length	+" eventos");	
 
 	$.each(data.events, function(key, value) {
-		//var habiaPreEvents = false;
-
 		//Compruebo si es uno de los pre eventos primero
 		if (my_pre_events.hasOwnProperty(value.event_id)) {
 			var parentEvent = my_pre_events[value.event_id]; //El evento padre
@@ -277,10 +271,9 @@ function checkData(data, idDom, serverId) {
 			}
 		}
 
-
 		//En la primera vez que cargo eventos, pongo el lugar y demás cosas del tooltip
 		if (firstServerLoad[idDom] == true) {
-			$('#event_table #'+value.event_id+' label.checkbox').attr('data-content', map_names[value.map_id]).attr('data-original-title', text['location']);			
+			$('#event_table #'+value.event_id+' a[data-toggle=popover]').attr('data-content', '<img src=\'img/locations/'+value.event_id+'.jpg\' />').attr('data-original-title', map_names[value.map_id]+' <a class="close" href="#">&times;</a>');			
 		}
 	});
 
@@ -314,7 +307,6 @@ $('#serverA').change(function(){
 	var aux = $(this).val() + ',' + $('#serverB').val() + ',' + $('#serverC').val();
 	setCookie("eolTimer_servers", aux, 365);	
 	
-	//$('#servers th.serverA').text($(this).children('option:selected').text());	
 	$('#servers th.serverA').text(world_names[$(this).val()]);	
 });
 $('#serverB').change(function(){
@@ -391,19 +383,18 @@ $('#auto-refresh').on('click', function() {
 //Botones
 $('#btn_reset').on('click', function(e){	
 	e.preventDefault();
-	var answer = confirm("Reset all the completed events?");
+	var answer = confirm(text["reset_events_ask"]);
 	if (answer) {
 		$('input.check_event').removeAttr('checked');
 		$('tr.event').removeClass('success');	
+		eventsCompleted = new Array();
+		saveCookieEventsCompleted();
 	}	
 });
 
 //Cargo los datos en la tabla al pulsar el botón
 $('#update_timers').on('click', function(e) {
 	e.preventDefault();
-	
-	//Cambio mi texto
-	//$(this).text('Update timers');
 	
 	//Si está marcada la casilla de auto-refresh
 	if ($('#auto-refresh').is(':checked')) {
@@ -430,7 +421,7 @@ function generateTable(data, maps) {
 	var tabla = $('#event_table tbody');
 	for(x in data) {
 		//Para cada evento padre creo una entrada (los pre-eventos no los muestro en tabla)
-		tabla.append('<tr class="event t50" id="'+x+'"><th><label class="checkbox inline event_name" data-toggle="popover" data-content="" data-original-title=""><input class="check_event" type="checkbox" /> <strong><span class="name" data-altname="'+my_events[x]+'">'+event_names[x]+'</span></strong></label></th><td class="serverA"><span class="name">--</span></td><td class="serverB"><span class="name">--</span></td><td class="serverC"><span class="name">--</span></td></tr>');
+		tabla.append('<tr class="event t50" id="'+x+'"><td class="middle"><a href="#" class="btn btn-info btn-mini" data-toggle="popover" data-content="" data-original-title=""><i class="icon-info-sign icon-white"></i></a></td><th><label class="checkbox inline event_name"><input class="check_event" type="checkbox" /> <strong><span class="name" data-altname="'+my_events[x]+'">'+event_names[x]+'</span></strong></label></th><td class="serverA"><span class="name">--</span></td><td class="serverB"><span class="name">--</span></td><td class="serverC"><span class="name">--</span></td></tr>');
 	}
 
 	//Eventos de los checkbox
@@ -446,24 +437,23 @@ function generateTable(data, maps) {
 			eventsCompleted.splice(ind, 1);
 		}
 
-		
-		//alert("Añado/quito "+tr.attr('id'));
 		console.log(eventsCompleted);
 
 		//Salvo cambios
 		saveCookieEventsCompleted();
 	});
 
-
-	/*
-	<a href="#" class="btn btn-large btn-danger" data-toggle="popover" title="" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">Click to toggle popover</a>
-	*/
-	// popover demo
+	// popover
 	$("[data-toggle=popover]")
-		.popover({placement:'top', delay:500, trigger:'hover'})
-		.click(function(e) {  });
-}
+		.popover({placement:'right', trigger:'click', html:true, delay:{show:500, hide:100}})
+		.click(function(e) { 
+			e.preventDefault();
 
+			$(".popover").on('click', function() { 
+				$("[data-toggle=popover]").popover('hide'); 
+			});
+		 });
+}
 
 
 function saveCookieEventsCompleted() {
@@ -512,6 +502,7 @@ function notification(n_text, n_type) {
       timeout: 20000
     });
 
+	//El sonido
     if ($('#notify_sounds').is(':checked')) {
     	//Alerta sonora
     	if (n_type == 'boss')
@@ -519,6 +510,24 @@ function notification(n_text, n_type) {
     	else
     		audio_default.play();
     }
+}
+
+function chromeNotification(icon, title, text, n_type) {
+	var notification = window.webkitNotifications.createNotification(icon, title, text);
+
+    notification.onclick = function () { notification.close(); }
+    notification.ondisplay = function () { setTimeout(function(){ notification.close(); }, 3000); }
+    
+    notification.show();  
+
+    //El sonido
+    if ($('#notify_sounds').is(':checked')) {
+    	//Alerta sonora
+    	if (n_type == 'boss')
+    	   	audio_boss.play();
+    	else
+    		audio_default.play();
+    }  
 }
 
 
@@ -532,7 +541,7 @@ function create_alert(txt, type) {
 	date = '[';
 
 	var h = ""+current.getHours(),
-	m = current.getMinutes();
+	m = ""+current.getMinutes();
 
 	if (h.length == 1)
 		date = date + '0' + h;
@@ -551,18 +560,15 @@ function create_alert(txt, type) {
 	$('#alerts div.messages').prepend('<div class="alert '+type+' fade in"><button type="button" class="close" data-dismiss="alert">&times;</button><span class="date-mini">' + date + "</span> " + txt + '</div>');	
 }
 
-/* AUDIOS
-<audio>
-	<source src="audio/beep.mp3"></source>
-	<source src="audio/beep.ogg"></source>
-	Your browser isn't invited for super fun audio time.
-</audio>
+function clock() {
+	var Digital=new Date();
+	var hours=Digital.getHours(), minutes=Digital.getMinutes(), seconds=Digital.getSeconds();
+	
+	if (minutes<=9)
+ 		minutes="0"+minutes;
+ 	if (seconds<=9)
+ 		seconds="0"+seconds;
 
-var audio = $("#mySoundClip")[0];
-audio.play();
-audio.stop();
-
--- probar en Chrome que a lo mejor no funciona (Play y Stop serían)
-
-http://www.javascriptkit.com/script/script2/soundlink.shtml
-*/
+ 	$('#clock').text(hours+":"+minutes+":"+seconds);
+ 	setTimeout("clock()", 1000);
+}
