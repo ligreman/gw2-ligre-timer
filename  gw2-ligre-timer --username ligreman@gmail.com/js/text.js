@@ -27,10 +27,15 @@ if (lang=='es') {
 	text["settings"] = "Configuración";
 	text["reset_events"] = "Reiniciar todos los eventos";
 	text["location"] = "Localización";
-	text['disclaimer'] = "Sólo comprobado su funcionamiento en Chrome y Firefox.";
+	text['disclaimer'] = "Sólo comprobado su funcionamiento en Chrome y Firefox. Para usar las notificaciones de Chrome, hay que tener el juego en modo ventana (no ventana completa).";
 	text['reset_events_ask'] = "¿Reiniciar los eventos completados?";
-	text['usechrome'] = "Para usar las notificaciones de Chrome, hay que tener el juego en modo ventana (no ventana completa).";
+	text['usechrome'] = "Usar notificaciones de Chrome";
 	text['done'] = "Eventos completados";
+	text['gw2puzzleguide'] = "Guild Wars 2 Guía de Puzles de Saltos";
+	text['gw2pioneerguide'] = "Guild Wars 2 Guía de Pionero y Jefes";
+	text['templeSuccess'] = 'Abierto';
+	text['templeFail'] = 'Cerrado';
+	text['templeActive'] = 'Eventos';
 } else if (lang=='fr') {
 	text["prevents_of"] = "Pré-événements de";
 	text["error_updating_server"] = "Erreur mise à jour du serveur";
@@ -58,10 +63,12 @@ if (lang=='es') {
 	text["settings"] = "Configuration";
 	text["reset_events"] = "Redémarrez tous les événements";
 	text["location"] = "Emplacement";
-	text['disclaimer'] = "Seulement vérifié cela fonctionne dans Chrome et Firefox.";
+	text['disclaimer'] = "Seulement vérifié cela fonctionne dans Chrome et Firefox. Pour utiliser les notifications Chrome vous devez jouer le jeu en mode fenêtré (pas en plein écran).";
 	text["reset_events_ask"] = "Redémarrez événements terminés?";
-	text['usechrome'] = "Para usar las notificaciones de Chrome, hay que tener el juego en modo ventana (no ventana completa).";
+	text['usechrome'] = "Utilisez notifications de Chrome";
 	text['done'] = "Événements terminés";
+	text['gw2puzzleguide'] = "Guild Wars 2 Jumping Puzzle Guide";
+	text['gw2pioneerguide'] = "Guild Wars 2 Pioneer and Bosses Guide";
 } else if (lang=='de') {
 	text["prevents_of"] = "Pre-event der";
 	text["error_updating_server"] = "Fehler beim Aktualisieren der Server";
@@ -89,10 +96,12 @@ if (lang=='es') {
 	text["settings"] = "Configuration";
 	text["reset_events"] = "Starten Sie alle Veranstaltungen";
 	text["location"] = "Stelle";
-	text['disclaimer'] = "Nur überprüfte es funktioniert in Chrome und Firefox.";
+	text['disclaimer'] = "Nur überprüfte es funktioniert in Chrome und Firefox. Um Chrome Benachrichtigungen verwenden, müssen Sie das Spiel im Fenstermodus (nicht Vollbild) spielen.";
 	text["reset_events_ask"] = "Neustart abgeschlossen Veranstaltungen?";
-	text['usechrome'] = "Para usar las notificaciones de Chrome, hay que tener el juego en modo ventana (no ventana completa).";
+	text['usechrome'] = "Meldungen mit Chrom";
 	text['done'] = "Events abgeschlossen";
+	text['gw2puzzleguide'] = "Guild Wars 2 Jumping Puzzle Guide";
+	text['gw2pioneerguide'] = "Guild Wars 2 Pioneer and Bosses Guide";
 } else {
 	text["prevents_of"] = "Pre-events of";
 	text["error_updating_server"] = "Error updating server";
@@ -120,8 +129,10 @@ if (lang=='es') {
 	text["settings"] = "Settings";
 	text["reset_events"] = "Reset all events";
 	text["location"] = "Location";
-	text['disclaimer'] = "Only tested on Chrome and Firefox.";
+	text['disclaimer'] = "Only tested on Chrome and Firefox. To use Chrome notifications you must play the game in windowed mode (not fullscreen).";
 	text["reset_events_ask"] = "Reset all the completed events?";
-	text['usechrome'] = "To use Chrome notifications, you must play the game in windowed mode (not fullscreen).";
+	text['usechrome'] = "Use Chrome notifications";
 	text['done'] = "Events completed";
+	text['gw2puzzleguide'] = "Guild Wars 2 Jumping Puzzle Guide";
+	text['gw2pioneerguide'] = "Guild Wars 2 Pioneer and Bosses Guide";
 }
