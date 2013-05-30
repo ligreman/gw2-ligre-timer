@@ -54,9 +54,12 @@
 
   <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-static-top">
       <div class="navbar-inner">                
-        <a class="brand" href="#">Chest Event Timers - EOL</a>
+        <span class="brand title">Chest Event Timers - EOL</span>
+        <ul class="nav">
+          <li class=""><a href="#" data-toggle="modal" data-target="#myModal">Temple Status Checker</a></li>         
+        </ul>
         <span id="clock" class="brand"></span>
       </div>
     </div>
@@ -83,7 +86,7 @@
                 <p class="marginBmini"><label><input id="auto-refresh" class="bottom" type="checkbox" checked="checked" /> <span class="txt_5">Auto-refresh timers</span></label></p>
                 <p class="marginBmini"><label><input id="notify_pre-events" class="bottom" type="checkbox" checked="checked" /> <span class="txt_6">Notify pre-events too</span></label></p>
                 <p class="marginBmini"><label><input id="notify_sounds" class="bottom" type="checkbox" checked="checked" /> <span class="txt_7">Play alert sounds</span></label></p>
-                <!--<p><label><input id="notify_sounds" class="bottom" type="checkbox" /> <span class="txt_13">Use Chrome notifications</span></label></p>-->
+                <p class="useChromeInput"><label><input id="use_chrome" class="bottom" type="checkbox" /> <span class="txt_13">Use Chrome notifications</span></label></p>
                              
               </div>
               <div class="span3">
@@ -127,7 +130,9 @@
       <hr>
 
       <footer>
-        <p>BETA v0.9 &copy; <a href="htt://ligresoftware.ligreman.com">Ligre Software</a> 2013</p>
+        <p>v1.0 <a href="htt://ligresoftware.ligreman.com">&copy; Ligre Software 2013</a></p>
+        <p>[Android] <a href="https://play.google.com/store/apps/details?id=com.ligresoftware.gw2puzzleguide"><span class="txt_15">GW2 Puzzle Guide</span></a></p>
+        <p>[Android] <a href="https://play.google.com/store/apps/details?id=com.ligresoftware.gw2pioneerguide"><span class="txt_16">GW2 Pioneer Guide</span></a></p>
       </footer>
 
     </div><!--/.fluid-container-->
@@ -147,6 +152,22 @@
     </audio>
 
 
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Temple Status Check</h3>
+      </div>
+      <div id="modal-body" class="modal-body">   
+          <table class="table table-striped table-fixed-header" id="temples_table">            
+          </table>     
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <!--<button class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+
 
     <!-- Le javascript
     ================================================== -->
@@ -154,7 +175,8 @@
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/general.js"></script>
-    <script src="js/load_json.js"></script>    
+    <script src="js/load_json.js"></script>
+    <script src="js/tableHeader.js"></script>
 
     <script type="text/javascript" src="js/jquery.noty.js"></script>
     <script type="text/javascript" src="js/notytheme/bottomRight.js"></script>
@@ -182,9 +204,29 @@
           $('.txt_12').text(text["reset_events"]);
           $('.txt_13').text(text["usechrome"]);
           $('.txt_14').text(text["done"]);
+          $('.txt_15').text(text["gw2puzzleguide"]);
+          $('.txt_16').text(text["gw2pioneerguide"]);
        
           //Reloj
           clock();
+
+          //Modal
+          $('#myModal').modal( { show:false } ) //, remote:'temples.html'
+            .on('show', function () {
+              //alert("que me muestro");
+              checkTemples();
+          });
+
+          //Notificaciones Chrome
+          if (window.webkitNotifications) {            
+            if (window.webkitNotifications.checkPermission() != 0) {
+              window.webkitNotifications.requestPermission();
+            }
+          } else {
+            //Desactivo el check y lo hago desaparecer
+            $('#use_chrome').removeAttr('checked');
+            $('.useChromeInput').remove();
+          }
 
         });
       //-->
@@ -193,17 +235,17 @@
 
 
 <script>
-  function a() {
+  /*function a() {
     setInterval(notify, 10000);
   }
   function notify() {
     var havePermission = window.webkitNotifications.checkPermission();
-    if (havePermission == 0) {
+    if (window.webkitNotifications.checkPermission()==0) {
       // 0 is PERMISSION_ALLOWED
       var notification = window.webkitNotifications.createNotification(
         'http://crystaltales.net46.net/img/events/03BF176A-D59F-49CA-A311-39FC6F533F2F.jpg',
         'Tequalt the sunless acaba de aparecer!',
-        '-claro de aurora-'
+        '-claro de aurora-'+"    .           "+'ohhh'
       );
 
       notification.onclick = function () {        
@@ -223,7 +265,7 @@
     console.log("Notifications are supported!");
   } else {
     console.log("Notifications are not supported for this Browser/OS version yet.");
-  }
+  }*/
 
 
 
@@ -244,7 +286,7 @@
   */
 </script>
 
-<!--<div style="width: 300px; height: 300px; background: yellow" onclick="a()">
+<!--<div style="width: 300px; height: 300px; background: yellow" onclick="notify()">
 Cick here to notify
 </div>-->
 

@@ -44,7 +44,8 @@ function checkCookie() {
 	prefNotifySound = getCookie('eolTimer_notifySounds'),
 	prefRealNames = getCookie('eolTimer_realNames'),
 	prefTableCondensed = getCookie('eolTimer_tableMini'),
-	prefEventsCompleted = getCookie('eolTimer_eventsCompleted');
+	prefEventsCompleted = getCookie('eolTimer_eventsCompleted'),
+	prefChromeNotifications = getCookie('eolTimer_chromeNotifications');
 	
 	if (servers==undefined || servers==null || servers=="") {
 		setCookie('eolTimer_servers', 'none,none,none', 365);		
@@ -86,6 +87,10 @@ function checkCookie() {
 		setCookie('eolTimer_eventsCompleted', 'none', 365);
 		prefEventsCompleted = 'none';
 	}
+	if (prefChromeNotifications==undefined || prefChromeNotifications==null || prefChromeNotifications=="" || !window.webkitNotifications) {
+		setCookie('eolTimer_chromeNotifications', 'none', 365);
+		prefChromeNotifications = 'none';
+	}
 
 	//Checks estado inicial según cookies
 	if (prefAutoRefresh == 'checked') {		
@@ -123,6 +128,11 @@ function checkCookie() {
 		$('#event_table').removeClass('table-condensed');	
 	}
 
+	if (prefChromeNotifications == 'checked')
+		$('#use_chrome').attr('checked', 'checked');		
+	else
+		$('#use_chrome').removeAttr('checked');	
+
 	//Estado inicial de Tabla de eventos según la cookie
 	if (prefEventsCompleted != 'none') {
 		var aux = prefEventsCompleted.split(';');
@@ -135,7 +145,7 @@ function checkCookie() {
 				eventsCompleted.push(ev_data[0]); //array de completados
 			}
 		}
-		console.log(eventsCompleted);
+		//console.log(eventsCompleted);
 	}
 }
 
@@ -200,7 +210,7 @@ function checkServers() {
 }
 
 function loading(server) {
-	console.log("Comprobando servidor: "+server);
+	//console.log("Comprobando servidor: "+server);
 	$('#servers .'+server).append('<img class="update" src="img/loading.gif" />');
 }
 
@@ -209,7 +219,7 @@ function checkData(data, idDom, serverId) {
 	//Recorro el array de data y de los eventos que yo tengo en cuenta miro el estado de cada uno de ellos, comparandolos con la estructura data
 	//if (my_events.hasOwnProperty("33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4"))
 	//Campos de data.events -> world_id, map_id, event_id, state (Warmup, Preparation, Active, Success, Fail)
-	console.log("En "+idDom+" hay "+data.events.length	+" eventos");	
+	//console.log("En "+idDom+" hay "+data.events.length	+" eventos");	
 
 	$.each(data.events, function(key, value) {
 		//Compruebo si es uno de los pre eventos primero
@@ -233,7 +243,12 @@ function checkData(data, idDom, serverId) {
 						create_alert(text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active_in"]+' <u>'+world_names[serverId]+'</u>: <em>('+event_names[value.event_id]+')</em>', 'warning');		
 					
 					if ($('#notify_pre-events').is(':checked')  &&  eventsCompleted.indexOf(parentEvent) == -1) {
-						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+parentEvent+'.jpg" /><p>'+text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active"]+'.</p></div><p class="noty_prevent">('+event_names[value.event_id]+')</p>', 'warmup');			
+					  if ($('#use_chrome').is(':checked')  &&  window.webkitNotifications.checkPermission()==0) {
+				  		chromeNotification('<img src="img/events/'+parentEvent+'.jpg" />', text["prevents_of"]+' '+my_events[parentEvent]+' '+text["are_active"], world_names[serverId]+' -- '+event_names[value.event_id], 'warmup');
+					  } else {
+					  	//Notificación normal
+						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+parentEvent+'.jpg" /><p>'+text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active"]+'.</p></div><p class="noty_prevent">('+event_names[value.event_id]+')</p>', 'warmup');
+					  }
 					}
 
 					if (firstServerLoad[idDom]) {
@@ -265,7 +280,11 @@ function checkData(data, idDom, serverId) {
 					create_alert('<strong>'+my_events[value.event_id]+'</strong> '+text["is_active_in"]+' <u>'+world_names[serverId]+'</u>', 'success');
 
 					if (eventsCompleted.indexOf(value.event_id) == -1) {
+					  if ($('#use_chrome').is(':checked')  &&  window.webkitNotifications.checkPermission()==0) {
+				  		chromeNotification('<img src="img/events/'+value.event_id+'.jpg" />', my_events[value.event_id]+' '+text["is_active"], world_names[serverId], 'boss');
+					  } else {
 						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+value.event_id+'.jpg" /><p><strong>'+my_events[value.event_id]+'</strong> '+text["is_active"]+'</p></div>', 'boss');
+					  }
 					}					
 				}
 			}
@@ -361,6 +380,13 @@ $('#table_condensed').change(function() {
 	}
 });
 
+	//Usar notificaciones Chrome
+$('#use_chrome').change(function() {
+	if ($(this).is(':checked'))
+		setCookie('eolTimer_chromeNotifications', 'checked', 365);		
+	else
+		setCookie('eolTimer_chromeNotifications', 'none', 365);			
+});
 
 	//Auto-refresh
 $('#auto-refresh').on('click', function() {
@@ -369,13 +395,13 @@ $('#auto-refresh').on('click', function() {
         autoRefreshTimer = setInterval( checkServers, 25000 ); //25 segundos
         setCookie('eolTimer_autorefresh', 'checked', 365);
         $('#timer_status').text('ON').addClass('on');
-        console.log("Auto-refresh ON");
+        //console.log("Auto-refresh ON");
     } else {  
         //Elimino el setInterval
         clearInterval(autoRefreshTimer);
         setCookie('eolTimer_autorefresh', 'none', 365);
         $('#timer_status').text('OFF').removeClass('on');
-        console.log("Auto-refresh OFF");
+        //console.log("Auto-refresh OFF");
     } 
 });
 
@@ -417,7 +443,7 @@ $('#update_timers').on('click', function(e) {
 
 //Genera la tabla de datos inicial con servidores
 function generateTable(data, maps) {
-	console.log("Creando tabla");
+	//console.log("Creando tabla");
 	var tabla = $('#event_table tbody');
 	for(x in data) {
 		//Para cada evento padre creo una entrada (los pre-eventos no los muestro en tabla)
@@ -437,7 +463,7 @@ function generateTable(data, maps) {
 			eventsCompleted.splice(ind, 1);
 		}
 
-		console.log(eventsCompleted);
+		//console.log(eventsCompleted);
 
 		//Salvo cambios
 		saveCookieEventsCompleted();
@@ -513,21 +539,30 @@ function notification(n_text, n_type) {
 }
 
 function chromeNotification(icon, title, text, n_type) {
-	var notification = window.webkitNotifications.createNotification(icon, title, text);
+	if (window.webkitNotifications) {            
+		if (window.webkitNotifications.checkPermission() != 0) {
+			window.webkitNotifications.requestPermission();
+	    } else {
+	    	var notification = window.webkitNotifications.createNotification(icon, title, text);
 
-    notification.onclick = function () { notification.close(); }
-    notification.ondisplay = function () { setTimeout(function(){ notification.close(); }, 3000); }
-    
-    notification.show();  
+		    notification.onclick = function () { notification.close(); }
+		    notification.ondisplay = function () { setTimeout(function(){ notification.close(); }, 3000); }
+		    
+		    notification.show();  
 
-    //El sonido
-    if ($('#notify_sounds').is(':checked')) {
-    	//Alerta sonora
-    	if (n_type == 'boss')
-    	   	audio_boss.play();
-    	else
-    		audio_default.play();
-    }  
+		    //El sonido
+		    if ($('#notify_sounds').is(':checked')) {
+		    	//Alerta sonora
+		    	if (n_type == 'boss')
+		    	   	audio_boss.play();
+		    	else
+		    		audio_default.play();
+		    }  
+	    }
+	} else {
+		//Por si acaso, un fallback
+		notification(title+'; '+text, n_type);
+	}
 }
 
 
@@ -571,4 +606,129 @@ function clock() {
 
  	$('#clock').text(hours+":"+minutes+":"+seconds);
  	setTimeout("clock()", 1000);
+}
+
+
+
+function checkTemples() {
+	var firstLoad = true, templeCount = 0;
+
+	//Limpieza de tabla
+	$('#temples_table').empty();	
+
+	//Genero la tabla
+	$('#temples_table').append('<thead class="header"><tr><td></td></tr></thead><tbody></tbody>');
+	for (y in temples_table) {
+		//genero las cabeceras de la tabla		
+		$('#temples_table thead tr').append('<th>'+temples_table[y]+'</th>');
+	}
+
+	for(x in world_names) {	
+		//Genero las filas
+		var tr = '<tr id="tm_'+x+'"><th>'+world_names[x]+'</th>';
+
+		for (y in temples_table) {
+			tr = tr + '<td class="'+y+'">--</td>';
+		}
+
+		tr = tr + '</tr>';
+		$('#temples_table tbody').append(tr);
+	}
+
+
+	//Por cada templo, consulto su estado en todos los mundos, así solo hago 1 consulta por templo
+	for (y in temples_table) {		
+		//console.log("Consulto "+temples_table[y]);
+		//Consulto el estado del templo en cuestion en el servidor
+		$.ajax({
+		  //url: 'example_events.json',
+		  url: 'https://api.guildwars2.com/v1/events.json?event_id='+y,
+		  dataType: 'json',
+		  async: false
+		}).done(function(data) {	
+			//console.log(data);			
+			$.each(data.events, function(key, value) {
+				//console.log('#tm_'+value.world_id+' td.'+y);
+				$('#tm_'+value.world_id+' td.'+y).text(text['temple'+value.state]).addClass(value.state);
+			});
+		}).fail(function (){
+			//alert("error");
+			create_alert('Error checking temple '+temples_table[y], 'fail');
+		});			
+	}
+
+	var $table = $('table#temples_table'); 
+
+	$table.floatThead({
+		scrollContainer: function($table){ 
+			return $table.closest('#modal-body'); 
+		}
+	});
+
+//http://programmingdrunk.com/floatThead/
+
+	//Header fixed
+	//
+	//$('#temples_table .table-fixed-header').fixedHeader();
+
+	/*$('.modal-body').on('scroll', function() {
+		//console.log("scroll");		
+	});*/
+/*
+	var clone = $('#temples_table thead').clone();
+	clone.addClass('red').hide();
+	$('#modal-body').prepend(clone);
+
+	$('.modal-body').on('scroll', function() {
+		console.log("scroll");
+		if ( $('#temples_table thead').is(':visible') ) {
+			console.log("no te veo");
+			clone.show();
+		}
+	});*/
+
+	//$('#temples_table thead').remove();
+		
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+	//Por cada mundo he de consultar los eventos
+	for(x in world_names) {	
+		var row = '<tr><th>'+world_names[x]+'</th>';
+		
+		for (y in temples_table) {
+			//Si es la primera vez genero las cabeceras de la tabla
+			if (firstLoad) {
+				$('#temples_table thead tr').append('<th> Temple of '+temples_table[y]+'</th>');
+			}
+
+			//Consulto el estado del templo en cuestion en el servidor
+			$.ajax({
+			  url: 'example_events.json',
+			  dataType: 'json',
+			  async: false
+			}).done(function(data) {				
+				row = row + '<td>'+data.+' Status</td>';
+			}).fail(function (){
+				row = row + '<td>Error</td>';
+				create_alert('Error checking temple '+temples_table[y]+' on '+world_names[x], 'fail');
+			});			
+		}
+
+		row = row + '</tr>';
+		$('#temples_table tbody').append(row);
+
+		firstLoad = false;
+		delete row;
+	}*/
 }
