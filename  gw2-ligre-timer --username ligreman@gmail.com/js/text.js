@@ -35,7 +35,10 @@ if (lang=='es') {
 	text['gw2pioneerguide'] = "Guild Wars 2 Guía de Pionero y Jefes";
 	text['templeSuccess'] = 'Abierto';
 	text['templeFail'] = 'Cerrado';
-	text['templeActive'] = 'Eventos';
+	text['templeWarmup'] = 'Cerrado';
+	text['templeActive'] = 'Eventos';	
+	text['status_check'] = 'Comprobar Estado de los Templos';
+	text['close'] = 'Cerrar';
 } else if (lang=='fr') {
 	text["prevents_of"] = "Pré-événements de";
 	text["error_updating_server"] = "Erreur mise à jour du serveur";
@@ -68,7 +71,13 @@ if (lang=='es') {
 	text['usechrome'] = "Utilisez notifications de Chrome";
 	text['done'] = "Événements terminés";
 	text['gw2puzzleguide'] = "Guild Wars 2 Jumping Puzzle Guide";
+	text['templeSuccess'] = 'Ouvrir';
+	text['templeFail'] = 'Proche';
+	text['templeWarmup'] = 'Proche';
+	text['templeActive'] = 'Événements';
 	text['gw2pioneerguide'] = "Guild Wars 2 Pioneer and Bosses Guide";
+	text['status_check'] = 'Temple vérification de L`état';
+	text['close'] = 'Proche';
 } else if (lang=='de') {
 	text["prevents_of"] = "Pre-event der";
 	text["error_updating_server"] = "Fehler beim Aktualisieren der Server";
@@ -102,6 +111,12 @@ if (lang=='es') {
 	text['done'] = "Events abgeschlossen";
 	text['gw2puzzleguide'] = "Guild Wars 2 Jumping Puzzle Guide";
 	text['gw2pioneerguide'] = "Guild Wars 2 Pioneer and Bosses Guide";
+	text['templeSuccess'] = 'Öffnen';
+	text['templeFail'] = 'Schließen';
+	text['templeWarmup'] = 'Schließen';
+	text['templeActive'] = 'Geschehen';
+	text['status_check'] = 'Temple-Status Prüfen';
+	text['close'] = 'Schließen';
 } else {
 	text["prevents_of"] = "Pre-events of";
 	text["error_updating_server"] = "Error updating server";
@@ -135,4 +150,10 @@ if (lang=='es') {
 	text['done'] = "Events completed";
 	text['gw2puzzleguide'] = "Guild Wars 2 Jumping Puzzle Guide";
 	text['gw2pioneerguide'] = "Guild Wars 2 Pioneer and Bosses Guide";
+	text['templeSuccess'] = 'Open';
+	text['templeFail'] = 'Close';
+	text['templeWarmup'] = 'Close';
+	text['templeActive'] = 'Events';
+	text['status_check'] = 'Temple Status Check';
+	text['close'] = 'Close';
 }

@@ -206,7 +206,7 @@ function checkServers() {
 		}).always(function () {
 			$('#servers .serverC .update').remove();
 		});		
-	}	
+	}
 }
 
 function loading(server) {
@@ -327,18 +327,45 @@ $('#serverA').change(function(){
 	setCookie("eolTimer_servers", aux, 365);	
 	
 	$('#servers th.serverA').text(world_names[$(this).val()]);	
+
+	if ($(this).val() == 'none') {
+		$('#event_table th.serverA').text(text["server"]+' A');
+		$('#event_table td.serverA').removeAttr('data-status');
+		$('#event_table td.serverA span.name').text('--');
+
+		//En la tabla oculta he de poner eventos a null todos
+		$('#data .events span.serverA').text('none');
+	}
 });
 $('#serverB').change(function(){
 	var aux = $('#serverA').val() + ',' + $(this).val() + ',' + $('#serverC').val();
 	setCookie("eolTimer_servers", aux, 365);	
 
 	$('#servers th.serverB').text(world_names[$(this).val()]);	
+
+	if ($(this).val() == 'none') {
+		$('#event_table th.serverB').text(text["server"]+' B');
+		$('#event_table td.serverB').removeAttr('data-status');
+		$('#event_table td.serverB span.name').text('--');
+
+		//En la tabla oculta he de poner eventos a null todos
+		$('#data .events span.serverB').text('none');
+	}
 });
 $('#serverC').change(function(){
 	var aux = $('#serverA').val() + ',' + $('#serverB').val() + ',' + $(this).val();
 	setCookie("eolTimer_servers", aux, 365);	
 
 	$('#servers th.serverC').text(world_names[$(this).val()]);	
+
+	if ($(this).val() == 'none') {
+		$('#event_table th.serverC').text(text["server"]+' C');
+		$('#event_table td.serverC').removeAttr('data-status');
+		$('#event_table td.serverC span.name').text('--');
+
+		//En la tabla oculta he de poner eventos a null todos
+		$('#data .events span.serverC').text('none');
+	}
 });
 
 
@@ -611,16 +638,17 @@ function clock() {
 
 
 function checkTemples() {
-	var firstLoad = true, templeCount = 0;
+	var firstLoad = true;
 
 	//Limpieza de tabla
 	$('#temples_table').empty();	
 
 	//Genero la tabla
-	$('#temples_table').append('<thead class="header"><tr><td></td></tr></thead><tbody></tbody>');
-	for (y in temples_table) {
+	$('#temples_table').append('<thead class="header"><tr><td></td></tr></thead><tfoot><tr><td></td></tr></tfoot><tbody></tbody>');
+
+	for (y in temples_table) {		
 		//genero las cabeceras de la tabla		
-		$('#temples_table thead tr').append('<th>'+temples_table[y]+'</th>');
+		$('#temples_table thead tr, #temples_table tfoot tr').append('<th>'+temples_table[y]+'</th>');
 	}
 
 	for(x in world_names) {	
@@ -649,7 +677,7 @@ function checkTemples() {
 			//console.log(data);			
 			$.each(data.events, function(key, value) {
 				//console.log('#tm_'+value.world_id+' td.'+y);
-				$('#tm_'+value.world_id+' td.'+y).text(text['temple'+value.state]).addClass(value.state);
+				$('#tm_'+value.world_id+' td.'+y).text(text['temple'+value.state]).addClass(value.state);				
 			});
 		}).fail(function (){
 			//alert("error");
@@ -657,78 +685,4 @@ function checkTemples() {
 		});			
 	}
 
-	var $table = $('table#temples_table'); 
-
-	$table.floatThead({
-		scrollContainer: function($table){ 
-			return $table.closest('#modal-body'); 
-		}
-	});
-
-//http://programmingdrunk.com/floatThead/
-
-	//Header fixed
-	//
-	//$('#temples_table .table-fixed-header').fixedHeader();
-
-	/*$('.modal-body').on('scroll', function() {
-		//console.log("scroll");		
-	});*/
-/*
-	var clone = $('#temples_table thead').clone();
-	clone.addClass('red').hide();
-	$('#modal-body').prepend(clone);
-
-	$('.modal-body').on('scroll', function() {
-		console.log("scroll");
-		if ( $('#temples_table thead').is(':visible') ) {
-			console.log("no te veo");
-			clone.show();
-		}
-	});*/
-
-	//$('#temples_table thead').remove();
-		
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-	//Por cada mundo he de consultar los eventos
-	for(x in world_names) {	
-		var row = '<tr><th>'+world_names[x]+'</th>';
-		
-		for (y in temples_table) {
-			//Si es la primera vez genero las cabeceras de la tabla
-			if (firstLoad) {
-				$('#temples_table thead tr').append('<th> Temple of '+temples_table[y]+'</th>');
-			}
-
-			//Consulto el estado del templo en cuestion en el servidor
-			$.ajax({
-			  url: 'example_events.json',
-			  dataType: 'json',
-			  async: false
-			}).done(function(data) {				
-				row = row + '<td>'+data.+' Status</td>';
-			}).fail(function (){
-				row = row + '<td>Error</td>';
-				create_alert('Error checking temple '+temples_table[y]+' on '+world_names[x], 'fail');
-			});			
-		}
-
-		row = row + '</tr>';
-		$('#temples_table tbody').append(row);
-
-		firstLoad = false;
-		delete row;
-	}*/
 }
