@@ -244,7 +244,7 @@ function checkData(data, idDom, serverId) {
 					
 					if ($('#notify_pre-events').is(':checked')  &&  eventsCompleted.indexOf(parentEvent) == -1) {
 					  if ($('#use_chrome').is(':checked')  &&  window.webkitNotifications.checkPermission()==0) {
-				  		chromeNotification('<img src="img/events/'+parentEvent+'.jpg" />', text["prevents_of"]+' '+my_events[parentEvent]+' '+text["are_active"], world_names[serverId]+' -- '+event_names[value.event_id], 'warmup');
+				  		chromeNotification('img/events/'+parentEvent+'.jpg', text["prevents_of"]+' '+my_events[parentEvent]+' '+text["are_active"], world_names[serverId]+' -- '+event_names[value.event_id], 'warmup');
 					  } else {
 					  	//Notificación normal
 						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+parentEvent+'.jpg" /><p>'+text["prevents_of"]+' <strong>'+my_events[parentEvent]+'</strong> '+text["are_active"]+'.</p></div><p class="noty_prevent">('+event_names[value.event_id]+')</p>', 'warmup');
@@ -281,7 +281,7 @@ function checkData(data, idDom, serverId) {
 
 					if (eventsCompleted.indexOf(value.event_id) == -1) {
 					  if ($('#use_chrome').is(':checked')  &&  window.webkitNotifications.checkPermission()==0) {
-				  		chromeNotification('<img src="img/events/'+value.event_id+'.jpg" />', my_events[value.event_id]+' '+text["is_active"], world_names[serverId], 'boss');
+				  		chromeNotification('img/events/'+value.event_id+'.jpg', my_events[value.event_id]+' '+text["is_active"], world_names[serverId], 'boss');
 					  } else {
 						notification('<p class="noty_server"><em>'+world_names[serverId]+'</em></p><div class="noty_data"><img src="img/events/'+value.event_id+'.jpg" /><p><strong>'+my_events[value.event_id]+'</strong> '+text["is_active"]+'</p></div>', 'boss');
 					  }
@@ -409,9 +409,13 @@ $('#table_condensed').change(function() {
 
 	//Usar notificaciones Chrome
 $('#use_chrome').change(function() {
-	if ($(this).is(':checked'))
+	if ($(this).is(':checked')) {
 		setCookie('eolTimer_chromeNotifications', 'checked', 365);		
-	else
+
+		if (window.webkitNotifications.checkPermission!=0) {
+			window.webkitNotifications.requestPermission();
+		}
+	} else
 		setCookie('eolTimer_chromeNotifications', 'none', 365);			
 });
 
@@ -573,7 +577,7 @@ function chromeNotification(icon, title, text, n_type) {
 	    	var notification = window.webkitNotifications.createNotification(icon, title, text);
 
 		    notification.onclick = function () { notification.close(); }
-		    notification.ondisplay = function () { setTimeout(function(){ notification.close(); }, 3000); }
+		    notification.ondisplay = function () { setTimeout(function(){ notification.close(); }, 20000); }
 		    
 		    notification.show();  
 
