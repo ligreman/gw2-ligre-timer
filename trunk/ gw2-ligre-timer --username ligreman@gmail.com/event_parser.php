@@ -25,7 +25,7 @@ function procesar($lang) {
 	//var_dump($cuento);
 
 	$salida = array();
-	foreach ($todos as $evento) {
+	foreach ($todos as $evento) {		
 		if (in_array($evento->id, $cuento)) {
 			$salida[] = '{"id":"'.$evento->id.'","name":"'.$evento->name.'"}';		
 		}
@@ -39,10 +39,10 @@ function procesar($lang) {
 
 
 function leerListaCompleta($lang) {
-	$file = file_get_contents('json/event_'.$lang.'.json');
+	//$file = file_get_contents('json/event_'.$lang.'.json');
+	$file = file_get_contents('https://api.guildwars2.com/v1/event_names.json?lang='.$lang);	
 	$file = str_replace("'", '´', $file);	
 
-	
 	return json_decode($file);	
 }
 
