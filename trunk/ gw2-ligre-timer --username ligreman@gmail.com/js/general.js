@@ -46,8 +46,9 @@ function checkCookie() {
 	prefTableCondensed = getCookie('eT_mini'),
 	prefEventsCompleted = getCookie('eT_done'),
 	prefChromeNotifications = getCookie('eT_chrome'),
-	prefShowCharacters = getCookie('eT_schar');
-	prefCharactersTable = getCookie('eT_tchar');
+	prefShowCharacters = getCookie('eT_schar'),
+	prefCharactersTable = getCookie('eT_tchar'),
+	prefHideCompleted = getCookie('eT_hider');
 	
 	if (servers==undefined || servers==null || servers=="") {
 		setCookie('eT_srvs', 'none_none_none', 365);		
@@ -96,6 +97,10 @@ function checkCookie() {
 	if (prefCharactersTable==undefined || prefCharactersTable==null || prefCharactersTable=="") {
 		setCookie('eT_tchar', 'none', 365);
 		prefCharactersTable = 'none';
+	}
+	if (prefHideCompleted==undefined || prefHideCompleted==null || prefHideCompleted=="") {
+		setCookie('eT_hider', 'none', 365);
+		prefHideCompleted = 'none';
 	}
 	if (prefChromeNotifications==undefined || prefChromeNotifications==null || prefChromeNotifications=="" || !window.webkitNotifications) {
 		setCookie('eT_chrome', 'none', 365);
@@ -146,6 +151,11 @@ function checkCookie() {
 		$('#event_table td.character').addClass('hidden');
 	}
 
+	if (prefHideCompleted == 'chk')
+		$('#table_hider').attr('checked', 'checked');		
+	else
+		$('#table_hider').removeAttr('checked');	
+
 	if (prefChromeNotifications == 'chk')
 		$('#use_chrome').attr('checked', 'checked');		
 	else
@@ -161,6 +171,10 @@ function checkCookie() {
 			if (ev_data[1] == '1') {		
 				$('#'+id_codes[ev_data[0]]).addClass('success').find('input.check_event').attr('checked', 'checked');
 				eventsCompleted.push(id_codes[ev_data[0]]); //array de completados
+
+				//Si oculto los completados, pues oculto este
+				if (prefHideCompleted != 'none')
+					$('#'+id_codes[ev_data[0]]).hide();
 			}
 		}
 		//console.log(eventsCompleted);
@@ -477,6 +491,20 @@ $('#table_characters').change(function() {
 	} else {
 		$('#event_table td.character').addClass('hidden');
 		setCookie('eT_schar', 'none', 365);		
+	}
+});
+
+	//Hider
+$('#table_hider').change(function() {
+	if ($(this).is(':checked')) {		
+		setCookie('eT_hider', 'chk', 365);		
+		$('#event_table input.check_event').each(function() {
+			if ($(this).is(':checked'))
+				$(this).parents('tr').hide();
+		});
+	} else {		
+		setCookie('eT_hider', 'none', 365);
+		$('#event_table tr').show();
 	}
 });
 

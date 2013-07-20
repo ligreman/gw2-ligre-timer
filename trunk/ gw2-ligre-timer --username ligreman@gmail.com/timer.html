@@ -77,6 +77,7 @@
                   <label><i class="icon-globe"></i> <span class="txt_1">Server</span> A <select id="serverA" name="serverA"><option value="none" class="initial txt_2">Select a server</option></select></label>
                   <label><i class="icon-globe"></i> <span class="txt_1">Server</span> B <select id="serverB" name="serverB"><option value="none" class="initial txt_2">Select a server</option></select></label>
                   <label><i class="icon-globe"></i> <span class="txt_1">Server</span> C <select id="serverC" name="serverC"><option value="none" class="initial txt_2">Select a server</option></select></label>   
+                  <p class="center"><button id="update_timers" type="button" class="btn btn-primary nomargin"><strong><span class="txt_3_1">Update</span> <span class="txt_3_2">timers</span></strong></button></p>
               </div>
               <!--<div class="span2">
                 <p><button id="update_timers" type="button" class="btn btn-large btn-primary"><span class="txt_3_1">Update</span><br /><span class="txt_3_2">timers</span></button></p>                
@@ -94,7 +95,7 @@
                 <p><label><input id="real_names" class="bottom" type="checkbox" checked="checked" /> <span class="txt_9">Use real names of events</span></label></p>
                 <p><label><input id="table_condensed" class="bottom" type="checkbox" /> <span class="txt_10">Table condensed</span></label></p>
                 <p><label><input id="table_characters" class="bottom" type="checkbox" /> <span class="txt_19">Show characters in table</span></label></p>
-                <p><button id="update_timers" type="button" class="btn btn-primary nomargin"><strong><span class="txt_3_1">Update</span> <span class="txt_3_2">timers</span></strong></button></p>
+                <p><label><input id="table_hider" class="bottom" type="checkbox" /> <span class="txt_20">Hide completed events</span></label></p>
               </div>
             </div>          
 
@@ -238,6 +239,7 @@
           $('.txt_17').text(text["status_check"]);
           $('.txt_18').text(text["close"]);
           $('.txt_19').text(text["character"]);
+          $('.txt_20').text(text["hider"]);
        
           //Reloj
           clock();
