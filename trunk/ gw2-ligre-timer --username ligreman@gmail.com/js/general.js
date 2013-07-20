@@ -38,22 +38,24 @@ function getCookie(c_name) {
 }
 
 function checkCookie() {
-	var servers = getCookie('eolTimer_servers'),
-	prefAutoRefresh = getCookie('eolTimer_autorefresh'),
-	prefNotifyPreEvents = getCookie('eolTimer_notifyPreEvents'),
-	prefNotifySound = getCookie('eolTimer_notifySounds'),
-	prefRealNames = getCookie('eolTimer_realNames'),
-	prefTableCondensed = getCookie('eolTimer_tableMini'),
-	prefEventsCompleted = getCookie('eolTimer_eventsCompleted'),
-	prefChromeNotifications = getCookie('eolTimer_chromeNotifications');
+	var servers = getCookie('eT_srvs'),
+	prefAutoRefresh = getCookie('eT_auto'),
+	prefNotifyPreEvents = getCookie('eT_pres'),
+	prefNotifySound = getCookie('eT_snd'),
+	prefRealNames = getCookie('eT_real'),
+	prefTableCondensed = getCookie('eT_mini'),
+	prefEventsCompleted = getCookie('eT_done'),
+	prefChromeNotifications = getCookie('eT_chrome'),
+	prefShowCharacters = getCookie('eT_schar');
+	prefCharactersTable = getCookie('eT_tchar');
 	
 	if (servers==undefined || servers==null || servers=="") {
-		setCookie('eolTimer_servers', 'none,none,none', 365);		
+		setCookie('eT_srvs', 'none_none_none', 365);		
 		servers = 'none,none,none';
 	}
 
 	//Pongo los select
-	var aux = servers.split(',');
+	var aux = servers.split('_');
 	$('#serverA').val(aux[0]);
 	$('#serverB').val(aux[1]);
 	$('#serverC').val(aux[2]);
@@ -64,36 +66,44 @@ function checkCookie() {
 
 	//Preferencias vacías
 	if (prefAutoRefresh==undefined || prefAutoRefresh==null || prefAutoRefresh=="") {
-		setCookie('eolTimer_autorefresh', 'none', 365);
+		setCookie('eT_auto', 'none', 365);
 		prefAutoRefresh = 'none';
 	}
 	if (prefNotifyPreEvents==undefined || prefNotifyPreEvents==null || prefNotifyPreEvents=="") {
-		setCookie('eolTimer_notifyPreEvents', 'none', 365);
+		setCookie('eT_pres', 'none', 365);
 		prefNotifyPreEvents = 'none';
 	}
 	if (prefNotifySound==undefined || prefNotifySound==null || prefNotifySound=="") {
-		setCookie('eolTimer_notifySounds', 'none', 365);
+		setCookie('eT_snd', 'none', 365);
 		prefNotifySound = 'none';
 	}
 	if (prefRealNames==undefined || prefRealNames==null || prefRealNames=="") {
-		setCookie('eolTimer_realNames', 'none', 365);
+		setCookie('eT_real', 'none', 365);
 		prefRealNames = 'none';
 	}
 	if (prefTableCondensed==undefined || prefTableCondensed==null || prefTableCondensed=="") {
-		setCookie('eolTimer_tableMini', 'none', 365);
+		setCookie('eT_mini', 'none', 365);
 		prefTableCondensed = 'none';
 	}
 	if (prefEventsCompleted==undefined || prefEventsCompleted==null || prefEventsCompleted=="") {
-		setCookie('eolTimer_eventsCompleted', 'none', 365);
+		setCookie('eT_done', 'none', 365);
 		prefEventsCompleted = 'none';
 	}
+	if (prefShowCharacters==undefined || prefShowCharacters==null || prefShowCharacters=="") {
+		setCookie('eT_schar', 'none', 365);
+		prefShowCharacters = 'none';
+	}
+	if (prefCharactersTable==undefined || prefCharactersTable==null || prefCharactersTable=="") {
+		setCookie('eT_tchar', 'none', 365);
+		prefCharactersTable = 'none';
+	}
 	if (prefChromeNotifications==undefined || prefChromeNotifications==null || prefChromeNotifications=="" || !window.webkitNotifications) {
-		setCookie('eolTimer_chromeNotifications', 'none', 365);
+		setCookie('eT_chrome', 'none', 365);
 		prefChromeNotifications = 'none';
 	}
 
 	//Checks estado inicial según cookies
-	if (prefAutoRefresh == 'checked') {		
+	if (prefAutoRefresh == 'chk') {		
 		$('#auto-refresh').attr('checked', 'checked');	
 		clearInterval(autoRefreshTimer);	
 		autoRefreshTimer = setInterval( checkServers, 25000 ); //25 segundos
@@ -103,24 +113,24 @@ function checkCookie() {
 		$('#timer_status').text('OFF').removeClass('on');
 	}
 	
-	if (prefNotifyPreEvents == 'checked')
+	if (prefNotifyPreEvents == 'chk')
 		$('#notify_pre-events').attr('checked', 'checked');		
 	else
 		$('#notify_pre-events').removeAttr('checked');	
 
-	if (prefNotifySound == 'checked')
+	if (prefNotifySound == 'chk')
 		$('#notify_sounds').attr('checked', 'checked');		
 	else
 		$('#notify_sounds').removeAttr('checked');	
 
-	if (prefRealNames == 'checked') 
+	if (prefRealNames == 'chk') 
 		$('#real_names').attr('checked', 'checked');		
 	else {
 		$('#real_names').removeAttr('checked');	
 		changeRealNameEvents();
 	}
 
-	if (prefTableCondensed == 'checked') {
+	if (prefTableCondensed == 'chk') {
 		$('#table_condensed').attr('checked', 'checked');		
 		$('#event_table').addClass('table-condensed');
 	} else {
@@ -128,24 +138,47 @@ function checkCookie() {
 		$('#event_table').removeClass('table-condensed');	
 	}
 
-	if (prefChromeNotifications == 'checked')
+	if (prefShowCharacters == 'chk') {
+		$('#table_characters').attr('checked', 'checked');		
+		$('#event_table td.character').removeClass('hidden');	
+	} else {
+		$('#table_characters').removeAttr('checked');		
+		$('#event_table td.character').addClass('hidden');
+	}
+
+	if (prefChromeNotifications == 'chk')
 		$('#use_chrome').attr('checked', 'checked');		
 	else
 		$('#use_chrome').removeAttr('checked');	
 
 	//Estado inicial de Tabla de eventos según la cookie
 	if (prefEventsCompleted != 'none') {
-		var aux = prefEventsCompleted.split(';');
+		var aux = prefEventsCompleted.split('@');
 		for (x in aux) {
-			var ev_data = aux[x].split(',');
+			var ev_data = aux[x].split('_');  //datos de la cookie
 
 			//ID ev_data[0]; STATUS (1/0) ev_data[1]
 			if (ev_data[1] == '1') {		
-				$('#'+ev_data[0]).addClass('success').find('input.check_event').attr('checked', 'checked');
-				eventsCompleted.push(ev_data[0]); //array de completados
+				$('#'+id_codes[ev_data[0]]).addClass('success').find('input.check_event').attr('checked', 'checked');
+				eventsCompleted.push(id_codes[ev_data[0]]); //array de completados
 			}
 		}
 		//console.log(eventsCompleted);
+	}
+
+	//Estado inicial de los personajes en la tabla de eventos según la cookie
+	if (prefCharactersTable != 'none') {
+		var aux = prefCharactersTable.split('@');
+		for (x in aux) {
+			var ev_data = aux[x].split('_');
+
+			//ID ev_data[0]; STATUS (1/0) ev_data[1], 2, 3...8
+			for (y=1; y<=8; y++) {
+				if (ev_data[y] == '1') {		
+					$('#'+id_codes[ev_data[0]]+' .char_'+y).attr('checked', 'checked');
+				}
+			}			
+		}
 	}
 }
 
@@ -323,8 +356,8 @@ function checkStateChange(eventId, actualState, idDom) {
 
 //Listener de dropdowns
 $('#serverA').change(function(){
-	var aux = $(this).val() + ',' + $('#serverB').val() + ',' + $('#serverC').val();
-	setCookie("eolTimer_servers", aux, 365);	
+	var aux = $(this).val() + '_' + $('#serverB').val() + '_' + $('#serverC').val();
+	setCookie("eT_srvs", aux, 365);	
 	
 	$('#servers th.serverA').text(world_names[$(this).val()]);	
 
@@ -338,8 +371,8 @@ $('#serverA').change(function(){
 	}
 });
 $('#serverB').change(function(){
-	var aux = $('#serverA').val() + ',' + $(this).val() + ',' + $('#serverC').val();
-	setCookie("eolTimer_servers", aux, 365);	
+	var aux = $('#serverA').val() + '_' + $(this).val() + '_' + $('#serverC').val();
+	setCookie("eT_srvs", aux, 365);	
 
 	$('#servers th.serverB').text(world_names[$(this).val()]);	
 
@@ -353,8 +386,8 @@ $('#serverB').change(function(){
 	}
 });
 $('#serverC').change(function(){
-	var aux = $('#serverA').val() + ',' + $('#serverB').val() + ',' + $(this).val();
-	setCookie("eolTimer_servers", aux, 365);	
+	var aux = $('#serverA').val() + '_' + $('#serverB').val() + '_' + $(this).val();
+	setCookie("eT_srvs", aux, 365);	
 
 	$('#servers th.serverC').text(world_names[$(this).val()]);	
 
@@ -373,17 +406,17 @@ $('#serverC').change(function(){
 	//Notificar Pre eventos
 $('#notify_pre-events').change(function() {
 	if ($(this).is(':checked'))
-		setCookie('eolTimer_notifyPreEvents', 'checked', 365);		
+		setCookie('eT_pres', 'chk', 365);		
 	else
-		setCookie('eolTimer_notifyPreEvents', 'none', 365);			
+		setCookie('eT_pres', 'none', 365);			
 });
 
 	//Sonidos
 $('#notify_sounds').change(function() {
 	if ($(this).is(':checked'))
-		setCookie('eolTimer_notifySounds', 'checked', 365);		
+		setCookie('eT_snd', 'chk', 365);		
 	else
-		setCookie('eolTimer_notifySounds', 'none', 365);			
+		setCookie('eT_snd', 'none', 365);			
 });
 
 	//Nombres de eventos
@@ -391,18 +424,18 @@ $('#real_names').change(function() {
 	changeRealNameEvents();
 
 	if ($(this).is(':checked'))
-		setCookie('eolTimer_realNames', 'checked', 365);		
+		setCookie('eT_real', 'chk', 365);		
 	else
-		setCookie('eolTimer_realNames', 'none', 365);			
+		setCookie('eT_real', 'none', 365);			
 });
 
 	//Tabla condensada
 $('#table_condensed').change(function() {
 	if ($(this).is(':checked')) {
-		setCookie('eolTimer_tableMini', 'checked', 365);		
+		setCookie('eT_mini', 'chk', 365);		
 		$('#event_table').addClass('table-condensed');
 	} else {
-		setCookie('eolTimer_tableMini', 'none', 365);			
+		setCookie('eT_mini', 'none', 365);			
 		$('#event_table').removeClass('table-condensed');
 	}
 });
@@ -410,13 +443,13 @@ $('#table_condensed').change(function() {
 	//Usar notificaciones Chrome
 $('#use_chrome').change(function() {
 	if ($(this).is(':checked')) {
-		setCookie('eolTimer_chromeNotifications', 'checked', 365);		
+		setCookie('eT_chrome', 'chk', 365);		
 
 		if (window.webkitNotifications.checkPermission!=0) {
 			window.webkitNotifications.requestPermission();
 		}
 	} else
-		setCookie('eolTimer_chromeNotifications', 'none', 365);			
+		setCookie('eT_chrome', 'none', 365);			
 });
 
 	//Auto-refresh
@@ -424,16 +457,27 @@ $('#auto-refresh').on('click', function() {
 	if($(this).is(':checked')) {  
 		clearInterval(autoRefreshTimer);
         autoRefreshTimer = setInterval( checkServers, 25000 ); //25 segundos
-        setCookie('eolTimer_autorefresh', 'checked', 365);
+        setCookie('eT_auto', 'chk', 365);
         $('#timer_status').text('ON').addClass('on');
         //console.log("Auto-refresh ON");
     } else {  
         //Elimino el setInterval
         clearInterval(autoRefreshTimer);
-        setCookie('eolTimer_autorefresh', 'none', 365);
+        setCookie('eT_auto', 'none', 365);
         $('#timer_status').text('OFF').removeClass('on');
         //console.log("Auto-refresh OFF");
     } 
+});
+
+	//Show Checks de personajes
+$('#table_characters').change(function() {
+	if ($(this).is(':checked')) {
+		$('#event_table td.character').removeClass('hidden');
+		setCookie('eT_schar', 'chk', 365);		
+	} else {
+		$('#event_table td.character').addClass('hidden');
+		setCookie('eT_schar', 'none', 365);		
+	}
 });
 
 
@@ -443,9 +487,13 @@ $('#btn_reset').on('click', function(e){
 	var answer = confirm(text["reset_events_ask"]);
 	if (answer) {
 		$('input.check_event').removeAttr('checked');
+		$('td.character input').removeAttr('checked');
 		$('tr.event').removeClass('success');	
 		eventsCompleted = new Array();
-		saveCookieEventsCompleted();
+		//saveCookieEventsCompleted();
+		//saveCookieCharactersTable();
+		setCookie('eT_done', 'none', 365);
+		setCookie('eT_tchar', 'none', 365);
 	}	
 });
 
@@ -475,10 +523,12 @@ $('#update_timers').on('click', function(e) {
 //Genera la tabla de datos inicial con servidores
 function generateTable(data, maps) {
 	//console.log("Creando tabla");
-	var tabla = $('#event_table tbody');
-	for(x in data) {
+	var tabla = $('#event_table tbody'),
+	character_boxes = '<p class="nomargin nopadding"><input type="checkbox" class="char_1" /><input type="checkbox" class="char_2" /><input type="checkbox" class="char_3" /><input type="checkbox" class="char_4" /></p><p class="nomargin"><input type="checkbox" class="char_5" /><input type="checkbox" class="char_6" /><input type="checkbox" class="char_7" /><input type="checkbox" class="char_8" /></p>';
+	
+	for(x in data) {		
 		//Para cada evento padre creo una entrada (los pre-eventos no los muestro en tabla)
-		tabla.append('<tr class="event t50" id="'+x+'"><td class="middle"><a href="#" class="btn btn-info btn-mini" data-toggle="popover" data-content="" data-original-title=""><i class="icon-info-sign icon-white"></i></a></td><th><label class="checkbox inline event_name"><input class="check_event" type="checkbox" /> <strong><span class="name" data-altname="'+my_events[x]+'">'+event_names[x]+'</span></strong></label></th><td class="serverA"><span class="name">--</span></td><td class="serverB"><span class="name">--</span></td><td class="serverC"><span class="name">--</span></td></tr>');
+		tabla.append('<tr class="event" id="'+x+'" data-code="'+codes_id[x]+'"><td class="middle info_btn"><a href="#" class="btn btn-info btn-mini" data-toggle="popover" data-content="" data-original-title=""><i class="icon-info-sign icon-white"></i></a> <a href="#" class="btn btn-danger btn-mini hider"><i class="icon-eye-close"></i></a></td><th><label class="checkbox inline event_name"><input class="check_event" type="checkbox" /> <strong><span class="name" data-altname="'+my_events[x]+'">'+event_names[x]+'</span></strong></label></th><td class="character">'+character_boxes+'</td><td class="serverA"><span class="name">--</span></td><td class="serverB"><span class="name">--</span></td><td class="serverC"><span class="name">--</span></td></tr>');
 	}
 
 	//Eventos de los checkbox
@@ -500,6 +550,12 @@ function generateTable(data, maps) {
 		saveCookieEventsCompleted();
 	});
 
+	//Eventos de los checkbox
+	$('td.character input').on('change', function() {		
+		//Salvo cambios
+		saveCookieCharactersTable();
+	});
+
 	// popover
 	$("[data-toggle=popover]")
 		.popover({placement:'right', trigger:'click', html:true, delay:{show:500, hide:100}})
@@ -510,6 +566,12 @@ function generateTable(data, maps) {
 				$("[data-toggle=popover]").popover('hide'); 
 			});
 		 });
+
+	//Evento de los botones hider
+	$('a.hider').on('click', function() {
+		var fila = $(this).parents('tr');
+		fila.hide();
+	});
 }
 
 
@@ -518,15 +580,40 @@ function saveCookieEventsCompleted() {
 	var datos = "";
 
 	$('#event_table tbody tr').each(function () {
+
 		//alert($(this).attr('id'));
-		datos = datos + $(this).attr('id')+',';
+		datos = datos + $(this).attr('data-code')+'_';
 		if ( $(this).find('input.check_event').is(':checked') ) {
-			datos = datos + '1;';
+			datos = datos + '1@';
 		} else
-			datos = datos + '0;';
+			datos = datos + '0@';
 	});
 
-	setCookie('eolTimer_eventsCompleted', datos, 365);
+	setCookie('eT_done', datos, 365);
+}
+
+function saveCookieCharactersTable() {
+	//Cojo los estados de los checks de la tabla y los guardo en la cookie
+	var datos = "";
+
+	$('#event_table tbody tr').each(function () {
+		//alert($(this).attr('id'));
+		datos = datos + $(this).attr('data-code')+'_'; //El code que se asociará al ID
+
+		for (x=1; x<=8; x++) {
+			if ( $(this).find('input.char_'+x).is(':checked') ) {
+				datos = datos + '1';
+			} else {
+				datos = datos + '0';
+			}
+
+			if (x==8) datos = datos + '@';
+			else  datos = datos + '_'
+		}
+	});
+
+	console.log(datos);
+	setCookie('eT_tchar', datos, 365);	
 }
 
 function changeRealNameEvents() {
@@ -635,7 +722,7 @@ function clock() {
  	if (seconds<=9)
  		seconds="0"+seconds;
 
- 	$('#clock').text(hours+":"+minutes+":"+seconds);
+ 	$('#clock, .clock').text(hours+":"+minutes+":"+seconds);
  	setTimeout("clock()", 1000);
 }
 

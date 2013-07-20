@@ -93,6 +93,7 @@
                 <p><i class="icon-eye-open"></i> <strong class="txt_8">Visualization</strong></p>
                 <p><label><input id="real_names" class="bottom" type="checkbox" checked="checked" /> <span class="txt_9">Use real names of events</span></label></p>
                 <p><label><input id="table_condensed" class="bottom" type="checkbox" /> <span class="txt_10">Table condensed</span></label></p>
+                <p><label><input id="table_characters" class="bottom" type="checkbox" /> <span class="txt_19">Show characters in table</span></label></p>
                 <p><button id="update_timers" type="button" class="btn btn-primary nomargin"><strong><span class="txt_3_1">Update</span> <span class="txt_3_2">timers</span></strong></button></p>
               </div>
             </div>          
@@ -107,12 +108,41 @@
             <thead>
               <tr id="servers">
                 <td></td>
-                <td class="t50 negrita"><span class="txt_14 mright">Events completed</span> <button id="btn_reset" class="btn btn-mini txt_12">Reset all events</button></td>
+                <td class="t50 negrita bottom_full"><span class="txt_14 mright">Events completed</span> <button id="btn_reset" class="btn btn-mini txt_12">Reset all events</button> <button class="btn btn-mini btn-success btn_shower"><i class="icon-eye-open"></i></button> <span class="clock"></span></td>
+                <td class="character">
+                  <p class="nomargin"><img src="img/classes/warrior.png" />
+                  <img src="img/classes/guardian.png" />
+                  <img src="img/classes/engineer.png" />
+                  <img src="img/classes/thief.png" /></p>
+                  <p class="nomargin nopadding"><img src="img/classes/necromancer.png" />
+                  <img src="img/classes/ranger.png" />
+                  <img src="img/classes/elementalist.png" />
+                  <img src="img/classes/mesmer.png" /></p>
+                </td>
                 <th class="serverA"><span class="txt_1">Server</span> A</th>
                 <th class="serverB"><span class="txt_1">Server</span> B</th>
                 <th class="serverC"><span class="txt_1">Server</span> C</th>
               </tr>
             </thead>
+            <tfoot>
+              <tr id="servers">
+                <td></td>
+                <td class="t50 negrita bottom_full"><span class="txt_14 mright">Events completed</span> <span class="clock"></span></td>
+                <td class="character">
+                  <p class="nomargin"><img src="img/classes/warrior.png" />
+                  <img src="img/classes/guardian.png" />
+                  <img src="img/classes/engineer.png" />
+                  <img src="img/classes/thief.png" /></p>
+                  <p class="nomargin nopadding"><img src="img/classes/necromancer.png" />
+                  <img src="img/classes/ranger.png" />
+                  <img src="img/classes/elementalist.png" />
+                  <img src="img/classes/mesmer.png" /></p>
+                </td>
+                <th class="serverA"><span class="txt_1">Server</span> A</th>
+                <th class="serverB"><span class="txt_1">Server</span> B</th>
+                <th class="serverC"><span class="txt_1">Server</span> C</th>
+              </tr>
+            </tfoot>
             <tbody>              
             </tbody>
           </table>
@@ -130,7 +160,7 @@
       <hr>
 
       <footer>
-        <p>v1.1 <a href="htt://ligresoftware.ligreman.com">&copy; Ligre Software 2013</a></p>
+        <p>v1.3 <a href="htt://ligresoftware.ligreman.com">&copy; Ligre Software 2013</a></p>
         <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.es_CO"><img alt="Licencia Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Guild Wars 2 Ligre Timer</span> por <a xmlns:cc="http://creativecommons.org/ns#" href="http://ligreman.com/" property="cc:attributionName" rel="cc:attributionURL">Ligreman</a> se encuentra bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.es_CO">Licencia Creative Commons Atribución-NoComercial-SinDerivadas 3.0 Unported</a>.<br />Basada en una obra en <a xmlns:dct="http://purl.org/dc/terms/" href="http://timer.ligreman.com/" rel="dct:source">http://timer.ligreman.com/</a>.</p>
         <p>[Android] <a href="https://play.google.com/store/apps/details?id=com.ligresoftware.gw2puzzleguide"><span class="txt_15">GW2 Puzzle Guide</span></a></p>
         <p>[Android] <a href="https://play.google.com/store/apps/details?id=com.ligresoftware.gw2pioneerguide"><span class="txt_16">GW2 Pioneer Guide</span></a></p>
@@ -207,6 +237,7 @@
           $('.txt_16').text(text["gw2pioneerguide"]);
           $('.txt_17').text(text["status_check"]);
           $('.txt_18').text(text["close"]);
+          $('.txt_19').text(text["character"]);
        
           //Reloj
           clock();
@@ -228,6 +259,11 @@
             $('#use_chrome').removeAttr('checked');
             $('.useChromeInput').remove();
           }
+
+          //Shower
+          $('.btn_shower').on('click', function() {
+              $('#event_table tr').show();
+          });
 
         });
       //-->

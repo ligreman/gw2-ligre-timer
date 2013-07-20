@@ -5,7 +5,9 @@ var world_names = new Array(),
 	my_events = new Array(),
 	my_pre_events = new Array(),
 	aliases = new Array(),
-	temples_table = new Array();
+	temples_table = new Array(),
+	id_codes = new Array(),
+	codes_id = new Array();
 
 // en, es, fr, de
 
@@ -116,7 +118,11 @@ var world_names = new Array(),
 			events_table[value.id] = insider;		
 
 			event_dom.append('<p id="'+value.id+'"><span class="serverA">none</span> <span class="serverB">none</span> <span class="serverC">none</span></p>');
-			my_events[value.id] = aliases[value.id];			
+			my_events[value.id] = aliases[value.id];	
+
+			//asociación id y code
+			id_codes[value.code] = value.id;
+			codes_id[value.id] = value.code;
 		});	
 
 		delete insider;
@@ -125,6 +131,7 @@ var world_names = new Array(),
 		//console.log(my_events);
 		//console.log(my_pre_events);
 		//console.log(my_maps);
+		//console.log(id_codes);
 
 		//Inicio otras cosas de la página
 		generateTable(events_table);
