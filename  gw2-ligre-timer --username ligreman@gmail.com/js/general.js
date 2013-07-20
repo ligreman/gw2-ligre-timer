@@ -522,6 +522,7 @@ $('#btn_reset').on('click', function(e){
 		//saveCookieCharactersTable();
 		setCookie('eT_done', 'none', 365);
 		setCookie('eT_tchar', 'none', 365);
+		$('#event_table tr').show();
 	}	
 });
 
@@ -566,10 +567,13 @@ function generateTable(data, maps) {
 		if ($(this).is(':checked')) {
 			tr.addClass('success');
 			eventsCompleted.push(tr.attr('id'));
+			if ($('#table_hider').is(':checked'))
+				tr.hide();
 		} else {
 			tr.removeClass('success');
 			var ind = eventsCompleted.indexOf(tr.attr('id'));			
-			eventsCompleted.splice(ind, 1);
+			eventsCompleted.splice(ind, 1);			
+			tr.show();
 		}
 
 		//console.log(eventsCompleted);
