@@ -277,6 +277,9 @@ function checkData(data, idDom, serverId) {
 			//console.log(eventsCompleted);
 			//console.log(parentEvent);
 
+			//Activo el cuadrito correspondiente		
+			$('#event_table #'+parentEvent+' .'+idDom+' span[data-event=sq_'+value.event_id+']').removeClass('success active preparation warmup inactive fail').addClass(value.state.toLowerCase());
+
 			//Compruebo si hay cambio de estado
 			if (checkStateChange(value.event_id, value.state, idDom)) {
 				//Si ha cambiado actualizo
@@ -314,6 +317,9 @@ function checkData(data, idDom, serverId) {
 
 		//Compruebo si es uno de los eventos para terminar
 		if (my_events.hasOwnProperty(value.event_id)) {	
+			//Activo el cuadrito correspondiente		
+			$('#event_table #'+value.event_id+' .'+idDom+' span[data-event=sq_'+value.event_id+']').removeClass('success active preparation warmup inactive fail').addClass(value.state.toLowerCase());
+
 			//Compruebo si ha cambiado de estado respecto a la anterior ejecución
 			if (checkStateChange(value.event_id, value.state, idDom)) {
 				//Actualizo el estado en tabla y DATA
@@ -556,8 +562,17 @@ function generateTable(data, maps) {
 	character_boxes = '<p class="nomargin nopadding"><input type="checkbox" class="char_1" /><input type="checkbox" class="char_2" /><input type="checkbox" class="char_3" /><input type="checkbox" class="char_4" /></p><p class="nomargin"><input type="checkbox" class="char_5" /><input type="checkbox" class="char_6" /><input type="checkbox" class="char_7" /><input type="checkbox" class="char_8" /></p>';
 	
 	for(x in data) {		
+		var cuadritos = "<br>";
+		//Saco los pres y genero cuadritos para ellos
+		$.each(data[x], function(key, value) {
+			cuadritos += '<span data-event="sq_'+value+'" title="'+event_names[value]+'" class="square pre"></span>';
+		});
+
+		//El cuadrito del evento
+		cuadritos += '<span data-event="sq_'+x+'" title="'+event_names[x]+'" class="square"></span>';
+
 		//Para cada evento padre creo una entrada (los pre-eventos no los muestro en tabla)
-		tabla.append('<tr class="event" id="'+x+'" data-code="'+codes_id[x]+'"><td class="middle info_btn"><a href="#" class="btn btn-info btn-mini" data-toggle="popover" data-content="" data-original-title=""><i class="icon-info-sign icon-white"></i></a> <a href="#" class="btn btn-danger btn-mini hider"><i class="icon-eye-close"></i></a></td><th><label class="checkbox inline event_name"><input class="check_event" type="checkbox" /> <strong><span class="name" data-altname="'+my_events[x]+'">'+event_names[x]+'</span></strong></label></th><td class="character">'+character_boxes+'</td><td class="serverA"><span class="name">--</span></td><td class="serverB"><span class="name">--</span></td><td class="serverC"><span class="name">--</span></td></tr>');
+		tabla.append('<tr class="event" id="'+x+'" data-code="'+codes_id[x]+'"><td class="middle info_btn"><a href="#" class="btn btn-info btn-mini" data-toggle="popover" data-content="" data-original-title=""><i class="icon-info-sign icon-white"></i></a> <a href="#" class="btn btn-danger btn-mini hider"><i class="icon-eye-close"></i></a></td><th><label class="checkbox inline event_name"><input class="check_event" type="checkbox" /> <strong><span class="name" data-altname="'+my_events[x]+'">'+event_names[x]+'</span></strong></label></th><td class="character">'+character_boxes+'</td><td class="serverA"><span class="name">--</span>'+cuadritos+'</td><td class="serverB"><span class="name">--</span>'+cuadritos+'</td><td class="serverC"><span class="name">--</span>'+cuadritos+'</td></tr>');
 	}
 
 	//Eventos de los checkbox

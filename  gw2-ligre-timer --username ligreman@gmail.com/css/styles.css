@@ -51,17 +51,17 @@ option.initial {
 }
 
 #servers th {
-	width: 14%; /*16.66%; 42*/
+	width: 20%; /*16.66%; 42*/
 }
 .table th, .table td {
 	vertical-align: middle;
 }
 td.t50, th.t50 {
-	width: 45%;
+	width: 30%;
 }
 td.serverA, td.serverB, td.serverC {
 	vertical-align: middle;
-	font-size: 1em;
+	font-size: 0.9em;
 	font-weight: bold;
 	padding-left: 35px;
 	background-size: auto 30px;
@@ -277,3 +277,56 @@ p.marginBmini {
 	color: #099;	
 }
 
+
+.square {
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	border: 1px solid #999;
+	margin: 2px;
+	border-radius: 50px;
+	vertical-align: top;
+}
+
+.square.pre {
+	width: 9px;
+	height: 9px;
+	border: 1px solid #999;	
+}
+.square.pre.success {
+	background-color: #D1EDFF;
+}
+.square.pre.active {
+	background-color: #00C900;
+}
+.square.pre.preparation {
+	background-color: #FCFFB2;
+}
+.square.pre.warmup {
+	background-color: #FFE3B7;
+}
+.square.pre.inactive {
+	background-color: transparent;
+}
+.square.pre.fail {
+	background-color: #FCB9B9;
+}
+
+.square.success {
+	background-color: #D1EDFF;
+}
+.square.active {
+	background-color: #00C900;
+}
+.square.preparation {
+	background-color: #FCFFB2;
+}
+.square.warmup {
+	background-color: #FFE3B7;
+}
+.square.inactive {
+	background-color: transparent;
+}
+.square.fail {
+	background-color: #FCB9B9;
+}
