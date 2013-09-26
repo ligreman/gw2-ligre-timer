@@ -26,6 +26,12 @@
 
 {"id":"9AA133DC-F630-4A0E-BB5D-EE34A2B306C2", "code":"E7", "label":"Golem Mark II", "pre_events":[	
 	{"id":"3ED4FEB4-A976-4597-94E8-8BFD9053522F"}]},
+	
+{"id":"C876757A-EF3E-4FBE-A484-07FF790D9B05", "code":"E21", "label":"Mega Destroyer", "pre_events":[	
+	{"id":"9E5D9F1A-FE14-49C6-917F-43AAE227165C"},
+	{"id":"4210CE81-BDB7-448E-BE33-46E18A5A3477"},
+	{"id":"584A4D22-33DC-4D77-A5D9-2FA7379401ED"},
+	{"id":"36E81760-7D92-458E-AA22-7CDE94112B8F"}]},
 
 {"id":"F7D9D427-5E54-4F12-977A-9809B23FBA99", "code":"E8", "label":"Frozen Maw (Ice Shaman)", "pre_events":[
 	{"id":"6F516B2C-BD87-41A9-9197-A209538BB9DF"},
@@ -48,6 +54,10 @@
 {"id":"568A30CF-8512-462F-9D67-647D69BEFAED", "code":"E12", "label":"Tequalt the Sunless", "pre_events":[]},
 
 {"id":"0464CB9E-1848-4AAA-BA31-4779A959DD71", "code":"E13", "label":"Jormag Claw", "pre_events":[	
+	{"id":"429D6F3E-079C-4DE0-8F9D-8F75A222DB36"},
+	{"id":"C957AD99-25E1-4DB0-9938-F54D9F23587B"},
+	{"id":"96D736C4-D2C6-4392-982F-AC6B8EF3B1C8"},
+	{"id":"0CA3A7E3-5F66-4651-B0CB-C45D3F0CAD95"},
 	{"id":"BFD87D5B-6419-4637-AFC5-35357932AD2C"}]},
 
 {"id":"03BF176A-D59F-49CA-A311-39FC6F533F2F", "code":"E14", "label":"The Shatterer", "pre_events":[	

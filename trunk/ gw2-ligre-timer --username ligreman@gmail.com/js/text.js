@@ -40,6 +40,7 @@ if (lang=='es') {
 	text['status_check'] = 'Comprobar Estado de los Templos';
 	text['close'] = 'Cerrar';
 	text['character'] = 'Mostrar personajes en tabla';
+	text['hider'] = 'Ocultar eventos completados';
 } else if (lang=='fr') {
 	text["prevents_of"] = "Pré-événements de";
 	text["error_updating_server"] = "Erreur mise à jour du serveur";
@@ -80,6 +81,7 @@ if (lang=='es') {
 	text['status_check'] = 'Temple vérification de L`état';
 	text['close'] = 'Proche';
 	text['character'] = 'Afficher les caractères dans le tableau';
+	text['hider'] = 'Masquer les événements terminés';
 } else if (lang=='de') {
 	text["prevents_of"] = "Pre-event der";
 	text["error_updating_server"] = "Fehler beim Aktualisieren der Server";
@@ -120,6 +122,7 @@ if (lang=='es') {
 	text['status_check'] = 'Temple-Status Prüfen';
 	text['close'] = 'Schließen';
 	text['character'] = 'Zeigen Zeichen in Tabelle';
+	text['hider'] = 'Ausblenden abgeschlossener Ereignisse';
 } else {
 	text["prevents_of"] = "Pre-events of";
 	text["error_updating_server"] = "Error updating server";
@@ -160,4 +163,5 @@ if (lang=='es') {
 	text['status_check'] = 'Temple Status Check';
 	text['close'] = 'Close';
 	text['character'] = 'Show characters in table';
+	text['hider'] = 'Hide completed events';
 }
