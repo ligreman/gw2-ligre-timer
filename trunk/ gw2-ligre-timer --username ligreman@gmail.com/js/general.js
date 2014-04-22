@@ -1,13 +1,14 @@
 var autoRefreshTimer='', eventsCompleted = new Array(), firstServerLoad = new Array(), preEventsReload = new Array(),
-audio_default = $("#audio_default")[0], audio_boss = $("#audio_boss")[0];
+audio_default = $("#audio_default")[0], audio_boss = $("#audio_boss")[0], fecha = new Date(), diferenciaHoraria = 0, horaActual = 0, minutoActual = 0;
 
 firstServerLoad["serverA"] = true;
 firstServerLoad["serverB"] = true;
 firstServerLoad["serverC"] = true;
 
 create_alert(text['disclaimer'], 'info');		
-//Contador de tiempo de eventos. ¿cómo hacerlo?
 
+//Diferencia horaria
+diferenciaHoraria = fecha.getTimezoneOffset() / 60;
 
 function setCookie(c_name,value,exdays) {
 	var exdate=new Date();
@@ -760,6 +761,10 @@ function create_alert(txt, type) {
 	$('#alerts div.messages').prepend('<div class="alert '+type+' fade in"><button type="button" class="close" data-dismiss="alert">&times;</button><span class="date-mini">' + date + "</span> " + txt + '</div>');	
 }
 
+function create_bossHour(txt, hour, minute) {
+	$('#alerts div.messagesBosses').append('<div class="alert alert-info fade in dateBoss" data-hour="'+hour+'" data-minute="'+minute+'"><span class="">' + hour+':'+minute + "</span> " + txt + '</div>');		
+}
+
 function clock() {
 	var Digital=new Date();
 	var hours=Digital.getHours(), minutes=Digital.getMinutes(), seconds=Digital.getSeconds();
@@ -771,6 +776,16 @@ function clock() {
 
  	$('#clock, .clock').text(hours+":"+minutes+":"+seconds);
  	setTimeout("clock()", 1000);
+
+	//Elimino tarjetas de Horarios
+	var divv = $('.dateBoss:first');
+	var hBoss = parseInt(divv.attr('data-hour')),
+		mBoss = parseInt(divv.attr('data-minute'));
+//	console.log("check "+hours+"#"+hBoss+" // "+minutes+"#"+mBoss);
+
+	if (hours>=hBoss && minutes>mBoss) {
+		divv.remove();
+	}
 }
 
 
@@ -823,4 +838,21 @@ function checkTemples() {
 		});			
 	}
 
+}
+
+
+//Convierte a UTC+1 las horas
+function convertToUTC(hora) {
+	hora = parseInt(hora);
+	resultado = hora + (-diferenciaHoraria) -1;
+
+	if (resultado<0) {
+		resultado = 24 - resultado;
+	}
+
+	if (resultado>23) {
+		resultado = resultado - 24;
+	}
+
+	return resultado;
 }

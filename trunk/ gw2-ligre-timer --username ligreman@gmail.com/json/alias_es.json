@@ -1,6 +1,6 @@
 [
 {"id":"33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4","alias":"Elemental de fuego"},
-{"id":"C5972F64-B894-45B4-BC31-2DEEA6B7C033","alias":"Sierpe gigante"},
+{"id":"C5972F64-B894-45B4-BC31-2DEEA6B7C033","alias":"Sierpe de la jungla"},
 {"id":"31CEBA08-E44D-472F-81B0-7143D73797F5","alias":"Behemot de las sombras"},
 {"id":"E6872A86-E434-4FC1-B803-89921FF0F6D6","alias":"Rey centauro Ulgoth"},
 {"id":"242BD241-E360-48F1-A8D9-57180E146789","alias":"Taidha Covington"},
@@ -19,5 +19,6 @@
 {"id":"6A6FD312-E75C-4ABF-8EA1-7AE31E469ABA","alias":"Templo de Dwayna"},
 {"id":"99254BA6-F5AE-4B07-91F1-61A9E7C51A51","alias":"Templo de Grenth"},
 {"id":"A5B5C2AF-22B1-4619-884D-F231A0EE0877","alias":"Templo de Melandru"},
-{"id":"02DECBE6-A0BA-47CC-9256-A6D59881D92A","alias":"Puertas de Arah"}
+{"id":"02DECBE6-A0BA-47CC-9256-A6D59881D92A","alias":"Puertas de Arah"},
+{"id":"#####","alias":"Gran Sierpe de la jungla"}
 ]
