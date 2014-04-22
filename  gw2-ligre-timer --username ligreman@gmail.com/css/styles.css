@@ -330,3 +330,18 @@ p.marginBmini {
 .square.fail {
 	background-color: #FCB9B9;
 }
+
+
+.dateBoss {
+	font-size: 1.2em;
+}
+.dateBoss span {
+	background: #EEE;
+	display: inline-block;
+	padding: 1px 5px;
+	border: 1px solid #BCE8F1;
+	border-radius: 5px;
+	margin-right: 10px;
+	color: #999;
+	text-shadow: 0 0 1px rgba(0,0,0,0.2);
+}

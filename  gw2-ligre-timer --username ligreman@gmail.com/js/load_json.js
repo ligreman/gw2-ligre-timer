@@ -11,13 +11,21 @@ var world_names = new Array(),
 
 // en, es, fr, de
 
+	if ($.support.cors == false)
+	{
+		create_alert('No se soporta CORS', 'fail');
+	} else {
+		create_alert('Soporta CORS', 'success');
+	}
+
 	//Worlds
 	var url = "json/world_"+lang+".json";
 	//console.log("Loading JSON: "+url);
 
-	$.ajax({
+	$.ajax({	  
 	  url: url,
 	  dataType: 'json',
+	  //xhrFields: { withCredentials: false },
 	  async: false
 	}).done(function(data) {
 		//console.log("Worlds JSON loaded ("+data.length+" items)");
@@ -155,6 +163,49 @@ var world_names = new Array(),
 		$.each(data.temples, function(key, value) {
 			temples_table[value.id] = value.god;			
 		});
+	}).fail(function (){
+		create_alert('Error loading JSON '+url, 'fail');
+	});
+
+
+	//Hours
+	url = "json/boss_hours.json";	
+
+	var remanentHours = new Array();
+
+	$.ajax({
+	  url: url,
+	  dataType: 'json',
+	  async: false
+	}).done(function(data) {
+		var ahora = new Date();
+		
+		$.each(data.hours, function(key, value) {
+			if (value!=undefined && value.boss!="-") {
+				horaBoss = convertToUTC(parseInt(value.hour));
+				minutoBoss = parseInt(value.minute);
+
+				if (horaBoss>ahora.getHours()) {
+					create_bossHour(aliases[value.boss], convertToUTC(value.hour), value.minute);			
+				} else if (horaBoss==ahora.getHours() && minutoBoss>ahora.getMinutes()) {
+					create_bossHour(aliases[value.boss], convertToUTC(value.hour), value.minute);
+				} else {
+					remanentHours[key] = value;
+				}
+			}
+		});
+
+
+		//Las remanentes
+		$.each(remanentHours, function(key,value) {
+			//console.log(value);
+			if (value!=undefined && value.boss!="-") {
+				create_bossHour(aliases[value.boss], convertToUTC(value.hour), value.minute);
+			}
+		});
+		//console.log(remanentHours);
+
+
 	}).fail(function (){
 		create_alert('Error loading JSON '+url, 'fail');
 	});
