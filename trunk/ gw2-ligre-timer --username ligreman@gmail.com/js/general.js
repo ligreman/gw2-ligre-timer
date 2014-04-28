@@ -844,7 +844,7 @@ function checkTemples() {
 //Convierte a UTC+1 las horas
 function convertToUTC(hora) {
 	hora = parseInt(hora);
-	resultado = hora + (-diferenciaHoraria) -1;
+	resultado = hora + (-diferenciaHoraria) -2;
 
 	if (resultado<0) {
 		resultado = 24 - resultado;
